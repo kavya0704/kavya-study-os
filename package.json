@@ -2,6 +2,7 @@
   "name": "kavya-study-os",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://kavya-study-os.vercel.app/",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -6,6 +6,7 @@
 
 ### **Offline-First Machine Learning Sprint Operating System, Active Recall Engine & Recovery Dashboard**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-kavya--study--os.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://kavya-study-os.vercel.app/)
 [![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -14,9 +15,15 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-100%25_Offline-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-[Live Demo](#-getting-started) • [Architecture](#-system-architecture) • [Features](#-core-features) • [Data Flow](#-data-flow--storage-engine) • [Installation](#-getting-started)
+[🚀 Open Live App](https://kavya-study-os.vercel.app/) • [Architecture](#-system-architecture) • [Features](#-core-features) • [Data Flow](#-data-flow--storage-engine) • [Installation](#-getting-started)
 
 </div>
+
+---
+
+> [!TIP]
+> 🌐 **Live Production Application:** **[https://kavya-study-os.vercel.app/](https://kavya-study-os.vercel.app/)**  
+> Deployed globally on the Vercel Edge Network with full offline PWA support, local IndexedDB persistence, and Groq Cloud LPU™ inference. Installable on iPhone & Android home screens!
 
 ---
 
@@ -308,58 +315,66 @@ kavya-study-os/
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🌐 Live Web Application
+You can access and use the live application immediately without installing anything locally:  
+👉 **[https://kavya-study-os.vercel.app/](https://kavya-study-os.vercel.app/)**
+
+---
+
+### Local Development Setup
+
+#### Prerequisites
 - [Node.js](https://nodejs.org/) (version 18.0 or later recommended)
 - [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/)
-- A free [Groq Cloud API Key](https://console.groq.com/) (optional; default demonstration key pre-wired)
+- A free [Groq Cloud API Key](https://console.groq.com/)
 
-### 1. Clone the Repository
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/kavya0704/kavya-study-os.git
 cd kavya-study-os
 ```
 
-### 2. Install Dependencies
+#### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-### 3. Configure Environment (Optional)
+#### 3. Configure Environment (Optional)
 Copy the example environment file:
 ```bash
 cp .env.example .env
 ```
-Add your custom Groq API Key if desired:
+Add your custom Groq API Key:
 ```env
 VITE_GROQ_API_KEY=gsk_your_groq_api_key_here
 ```
 *(Note: You can also configure or test your Groq API Key dynamically inside the in-app **Settings** tab at any time without rebuilding.)*
 
-### 4. Launch Development Server
+#### 4. Launch Development Server
 ```bash
 npm run dev
 ```
 Open your browser and navigate to `http://localhost:5173/`.
 
-### 5. Build for Production
+#### 5. Build for Production
 ```bash
 npm run build
 ```
-Generates a production bundle in `dist/` with PWA service worker manifests ready for deployment.
+Generates an optimized production bundle in `dist/` with PWA service worker manifests ready for deployment.
 
 ---
 
 ## 📱 Mobile Installation Guide (PWA)
 
 ### Apple iOS (Safari on iPhone 16)
-1. Open Safari and navigate to your deployed StudyOS URL.
+1. Open Safari and navigate to **[https://kavya-study-os.vercel.app/](https://kavya-study-os.vercel.app/)**.
 2. Tap the **Share** button (the square icon with an upward arrow) in the bottom navigation bar.
 3. Scroll down and select **"Add to Home Screen"**.
 4. Confirm by tapping **"Add"** in the top right.
 5. Launch **StudyOS** directly from your Home Screen in full-screen standalone mode with native safe-area insets.
 
 ### Google Android (Chrome)
-1. Open Chrome and navigate to the deployed URL.
+1. Open Chrome and navigate to **[https://kavya-study-os.vercel.app/](https://kavya-study-os.vercel.app/)**.
 2. Tap the **three vertical dots** in the top right.
 3. Select **"Install app"** or **"Add to Home Screen"**.
 4. Enjoy offline instant launch with home screen integration.
