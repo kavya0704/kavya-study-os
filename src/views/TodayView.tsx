@@ -3,6 +3,7 @@ import { StudyTask, StudyTaskSubtasks } from '../types';
 import { useTaskStore, useTimerStore, useProgressStore } from '../stores';
 import { useRevisionStore } from '../stores/useRevisionStore';
 import { getNextRecommendedAction } from '../engines/recommendationEngine';
+import { getTodayDateString, ROADMAP_START, ROADMAP_END } from '../engines';
 import { AppHeader } from '../components/layout/AppHeader';
 import { NextActionHero } from '../components/task/NextActionHero';
 import { TaskCard } from '../components/task/TaskCard';
@@ -56,16 +57,17 @@ export const TodayView: React.FC<TodayViewProps> = ({
     current.setDate(current.getDate() + offsetDays);
     const newDateStr = current.toISOString().split('T')[0];
 
-    // Constrain to roadmap window 2026-09-22 to 2026-12-31
-    if (newDateStr >= '2026-09-22' && newDateStr <= '2026-12-31') {
+    // Constrain to roadmap window
+    if (newDateStr >= ROADMAP_START && newDateStr <= ROADMAP_END) {
       loadDate(newDateStr);
       refreshProgress(newDateStr);
     }
   };
 
   const handleGoToday = () => {
-    loadDate('2026-09-22');
-    refreshProgress('2026-09-22');
+    const today = getTodayDateString();
+    loadDate(today);
+    refreshProgress(today);
   };
 
   // Task completion toggle

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { checkAndSeedDatabase } from './services/db';
 import { 
   useTaskStore, 
@@ -7,7 +7,7 @@ import {
   useProfileStore 
 } from './stores';
 import { useRevisionStore } from './stores/useRevisionStore';
-import { formatSecondsToDisplay } from './engines';
+import { formatSecondsToDisplay, getTodayDateString } from './engines';
 import { TodayView } from './views/TodayView';
 import { PlanView } from './views/PlanView';
 import { ResourcesView } from './views/ResourcesView';
@@ -58,35 +58,76 @@ export default function App() {
     return () => clearInterval(interval);
   }, [tick]);
 
-  // iOS Lock-Screen & Visibility Reconciler (immune to iOS tab suspension / screen locks)
+  // Active calendar date tracker for midnight rollover & auto-updates
+  const lastActiveDateRef = useRef(getTodayDateString());
+
+  // iOS Lock-Screen, Tab Visibility & Midnight Rollover Reconciler
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && useTimerStore.getState().isRunning) {
-        reconcileElapsed();
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'visible') {
+        if (useTimerStore.getState().isRunning) {
+          reconcileElapsed();
+        }
+        // Auto-check if a new day has arrived while backgrounded
+        const today = getTodayDateString();
+        if (today !== lastActiveDateRef.current) {
+          lastActiveDateRef.current = today;
+          const currentStoreDate = useTaskStore.getState().currentDate;
+          if (currentStoreDate < today) {
+            await loadDate(today);
+            await refreshProgress(today);
+          }
+        }
       }
     };
-    const handleWindowFocus = () => {
+
+    const handleWindowFocus = async () => {
       if (useTimerStore.getState().isRunning) {
         reconcileElapsed();
       }
+      const today = getTodayDateString();
+      if (today !== lastActiveDateRef.current) {
+        lastActiveDateRef.current = today;
+        const currentStoreDate = useTaskStore.getState().currentDate;
+        if (currentStoreDate < today) {
+          await loadDate(today);
+          await refreshProgress(today);
+        }
+      }
     };
+
+    // Periodic 60s check for seamless midnight rollover
+    const rolloverInterval = setInterval(async () => {
+      const today = getTodayDateString();
+      if (today !== lastActiveDateRef.current) {
+        lastActiveDateRef.current = today;
+        const currentStoreDate = useTaskStore.getState().currentDate;
+        if (currentStoreDate < today) {
+          await loadDate(today);
+          await refreshProgress(today);
+        }
+      }
+    }, 60000);
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('focus', handleWindowFocus);
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('focus', handleWindowFocus);
+      clearInterval(rolloverInterval);
     };
-  }, [reconcileElapsed]);
+  }, [reconcileElapsed, loadDate, refreshProgress]);
 
-  // Initial database seeding, profile load, and revision loader
+  // Initial database seeding, profile load, and dynamic daily task loader
   useEffect(() => {
     async function init() {
       try {
         await checkAndSeedDatabase();
         await loadProfile();
-        await loadDate('2026-09-22');
-        await refreshProgress('2026-09-22');
+        const today = getTodayDateString();
+        lastActiveDateRef.current = today;
+        await loadDate(today);
+        await refreshProgress(today);
         await loadRevisionItems();
       } catch (err) {
         console.error('Initialization error:', err);
@@ -171,7 +212,7 @@ export default function App() {
               <div>
                 <h1 className="text-lg font-bold text-slate-900">Groq AI Study Coach</h1>
                 <p className="text-xs text-blue-600 font-medium">
-                  Qwen 2.5 72B • Anti-Guilt Guardrails
+                  Groq Cloud LPU™ • Anti-Guilt Guardrails
                 </p>
               </div>
             </div>

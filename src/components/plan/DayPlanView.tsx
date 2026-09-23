@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { StudyDay, StudyTask } from '../../types';
 import { getDb } from '../../services/db';
+import { getTodayDateString } from '../../engines';
 
 interface DayPlanViewProps {
   currentDate?: string;
@@ -40,7 +41,7 @@ export const DayPlanView: React.FC<DayPlanViewProps> = ({
   onOpenReschedule,
   onToggleTask
 }) => {
-  const activeDate = selectedDate || currentDate || '2026-09-22';
+  const activeDate = selectedDate || currentDate || getTodayDateString();
   const handleDateShift = onSelectDate || onDateChange || (() => {});
 
   const [dayRecord, setDayRecord] = useState<StudyDay | null>(propCurrentDay || null);

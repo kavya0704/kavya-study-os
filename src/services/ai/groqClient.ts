@@ -9,8 +9,18 @@ import {
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_KEY = '';
 
-export const DEFAULT_AI_MODEL = 'qwen/qwen3.8-27b';
-export const FAST_AI_MODEL = 'qwen/qwen3.8-27b';
+export const DEFAULT_AI_MODEL = 'llama-3.3-70b-versatile';
+export const FAST_AI_MODEL = 'llama-3.1-8b-instant';
+
+export function getActiveModel(): string {
+  if (typeof window !== 'undefined') {
+    const localModel = localStorage.getItem('groq_model');
+    if (localModel && localModel.trim()) {
+      return localModel.trim();
+    }
+  }
+  return DEFAULT_AI_MODEL;
+}
 
 export function getGroqApiKey(): string {
   if (typeof window !== 'undefined') {
@@ -46,11 +56,18 @@ export async function callGroq(request: GroqCompletionRequest): Promise<string> 
     throw new Error('Groq API key not configured. Please set your key in Settings.');
   }
 
+  const modelToUse = request.model || getActiveModel();
+  const isQwen = modelToUse.toLowerCase().includes('qwen');
+  // Qwen on free tier has a strict 1,000 OTPM ceiling; cap tokens safely
+  const safeMaxTokens = isQwen
+    ? Math.min(request.max_tokens ?? 650, 650)
+    : Math.min(request.max_tokens ?? 1000, 1200);
+
   const payload = {
-    model: request.model || DEFAULT_AI_MODEL,
+    model: modelToUse,
     messages: request.messages,
     temperature: request.temperature ?? 0.3,
-    max_tokens: request.max_tokens ?? 1500,
+    max_tokens: safeMaxTokens,
     top_p: request.top_p ?? 0.95,
     stream: false
   };
@@ -68,6 +85,20 @@ export async function callGroq(request: GroqCompletionRequest): Promise<string> 
     if (!response.ok) {
       const errJson = await response.json().catch(() => null);
       const errMsg = errJson?.error?.message || `Groq API Error (${response.status}): ${response.statusText}`;
+
+      // Auto-fallback: If Qwen hits OTPM limit or rate limit, retry smoothly with Llama 3.3 70B
+      if (
+        isQwen && 
+        (errMsg.includes('OTPM') || errMsg.includes('tokens per minute') || response.status === 429)
+      ) {
+        console.warn('Qwen OTPM quota exceeded on Groq. Auto-falling back to llama-3.3-70b-versatile...');
+        return await callGroq({
+          ...request,
+          model: 'llama-3.3-70b-versatile',
+          max_tokens: 800
+        });
+      }
+
       throw new Error(errMsg);
     }
 
@@ -102,10 +133,10 @@ export async function generateRecallQuestions(topic: string, context?: string): 
   ];
 
   return callGroq({
-    model: FAST_AI_MODEL,
+    model: getActiveModel(),
     messages,
     temperature: 0.4,
-    max_tokens: 1200
+    max_tokens: 800
   });
 }
 
@@ -169,10 +200,10 @@ export async function diagnoseError(
   ];
 
   const raw = await callGroq({
-    model: DEFAULT_AI_MODEL,
+    model: getActiveModel(),
     messages,
     temperature: 0.2,
-    max_tokens: 1500
+    max_tokens: 900
   });
 
   return parseDiagnosticResponse(raw);
@@ -192,9 +223,9 @@ export async function explainConceptAnalogy(
   ];
 
   return callGroq({
-    model: DEFAULT_AI_MODEL,
+    model: getActiveModel(),
     messages,
     temperature: 0.5,
-    max_tokens: 1200
+    max_tokens: 700
   });
 }

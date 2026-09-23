@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Calendar } from 'lucide-react';
 import { getDb } from '../../services/db';
 import { StudySession, StudyTask } from '../../types';
+import { isTodayDate } from '../../engines';
 
 interface HeatmapDay {
   dateStr: string;
@@ -59,7 +60,7 @@ export const CalendarHeatmap: React.FC = () => {
             completedTasks: completed,
             totalTasks: tasks.length,
             isRestDay: isRest,
-            isToday: dStr === '2026-09-22'
+            isToday: isTodayDate(dStr)
           });
 
           cur.setDate(cur.getDate() + 1);

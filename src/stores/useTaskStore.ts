@@ -3,6 +3,7 @@ import { StudyDay, StudyTask, StudyTaskSubtasks, TaskStatus } from '../types';
 import { getDb, getStudyDayByDate, getTasksForDate } from '../services/db';
 import { generateSpacedRevisionItems } from '../engines/spacedRevisionEngine';
 import { validateReschedule } from '../engines/rescheduleEngine';
+import { getTodayDateString } from '../engines';
 
 interface UndoRecord {
   task: StudyTask;
@@ -25,7 +26,7 @@ interface TaskState {
 }
 
 export const useTaskStore = create<TaskState>((set, get) => ({
-  currentDate: '2026-09-22',
+  currentDate: getTodayDateString(),
   currentDay: null,
   tasks: [],
   isLoading: true,

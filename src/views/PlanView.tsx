@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { StudyTask } from '../types';
 import { useTaskStore } from '../stores/useTaskStore';
+import { getTodayDateString } from '../engines';
 import { 
   DayPlanView, 
   WeekView, 
@@ -31,7 +32,7 @@ export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
   } = useTaskStore();
 
   const [activeMode, setActiveMode] = useState<PlanMode>('week');
-  const [selectedDate, setSelectedDate] = useState(currentDate || '2026-09-22');
+  const [selectedDate, setSelectedDate] = useState(currentDate || getTodayDateString());
   const [selectedTaskForDetails, setSelectedTaskForDetails] = useState<StudyTask | null>(null);
   const [selectedTaskForReschedule, setSelectedTaskForReschedule] = useState<StudyTask | null>(null);
 

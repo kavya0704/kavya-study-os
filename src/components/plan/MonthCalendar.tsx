@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { StudyDay, StudyTask } from '../../types';
 import { getDb } from '../../services/db';
+import { isTodayDate, ROADMAP_START, ROADMAP_END } from '../../engines';
 
 interface MonthCalendarProps {
   selectedDate: string;
@@ -20,9 +21,6 @@ interface MonthDayCell {
   totalTasks: number;
   completedTasks: number;
 }
-
-const ROADMAP_START = '2026-09-22';
-const ROADMAP_END = '2026-12-31';
 
 export const MonthCalendar: React.FC<MonthCalendarProps> = ({
   selectedDate,
@@ -68,7 +66,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           dayOfMonth: prevMonthLastDay - i,
           isCurrentMonth: false,
           isInRoadmap: dStr >= ROADMAP_START && dStr <= ROADMAP_END,
-          isToday: dStr === '2026-09-22',
+          isToday: isTodayDate(dStr),
           isRestDay: dStr >= '2026-10-17' && dStr <= '2026-10-21',
           totalTasks: 0,
           completedTasks: 0
@@ -106,7 +104,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           dayOfMonth: day,
           isCurrentMonth: true,
           isInRoadmap: inRoadmap,
-          isToday: dStr === '2026-09-22',
+          isToday: isTodayDate(dStr),
           isRestDay: dStr >= '2026-10-17' && dStr <= '2026-10-21',
           dayNumber: dayNum,
           totalTasks,
@@ -124,7 +122,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           dayOfMonth: i,
           isCurrentMonth: false,
           isInRoadmap: dStr >= ROADMAP_START && dStr <= ROADMAP_END,
-          isToday: false,
+          isToday: isTodayDate(dStr),
           isRestDay: false,
           totalTasks: 0,
           completedTasks: 0

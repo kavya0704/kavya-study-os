@@ -4,9 +4,9 @@ import { getGroqApiKey, callGroq } from '../../services/ai';
 import { useProfileStore } from '../../stores/useProfileStore';
 
 const AI_MODELS = [
-  { id: 'qwen/qwen3.8-27b', name: 'Qwen 3.8 27B', desc: 'Ultra-low latency inference (~14ms)' },
-  { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B Versatile', desc: 'Deep multi-step reasoning & architecture' },
-  { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B Instant', desc: 'High-speed quick retrieval checks' }
+  { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B Versatile', desc: 'Deep multi-step reasoning, architecture & code intuition (Recommended)' },
+  { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B Instant', desc: 'Ultra-fast inference (~150ms) with highest token quotas' },
+  { id: 'qwen/qwen3.8-27b', name: 'Qwen 3.8 27B', desc: 'Experimental preview (Strict 1k OTPM quota on Groq free tier)' }
 ];
 
 export const AISettingsConfig: React.FC = () => {
@@ -15,7 +15,7 @@ export const AISettingsConfig: React.FC = () => {
   const [currentKey, setCurrentKey] = useState(getGroqApiKey());
   const [showKey, setShowKey] = useState(false);
   const [selectedModel, setSelectedModel] = useState(() => {
-    return localStorage.getItem('groq_model') || 'qwen/qwen3.8-27b';
+    return localStorage.getItem('groq_model') || 'llama-3.3-70b-versatile';
   });
 
   const [testState, setTestState] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
@@ -101,7 +101,7 @@ export const AISettingsConfig: React.FC = () => {
                 <div>
                   <div className="text-xs font-bold text-slate-900 flex items-center space-x-1.5">
                     <span>{m.name}</span>
-                    {m.id === 'qwen/qwen3.8-27b' && (
+                    {m.id === 'llama-3.3-70b-versatile' && (
                       <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
                         Default
                       </span>
