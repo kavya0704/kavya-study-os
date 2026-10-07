@@ -67,11 +67,11 @@ export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
           <div>
             <h1 className="text-xl font-bold text-slate-900 tracking-tight">Curriculum Planner</h1>
             <p className="text-xs text-slate-500">
-              101-Day AI/ML Master Plan • Safe Pacing
+              90-Day AI Engineer Master Plan • 5.5h/day
             </p>
           </div>
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-600 uppercase">
-            {activeMode === 'roadmap' ? '8 Phases' : activeMode} View
+            {activeMode === 'roadmap' ? '6 Phases' : activeMode} View
           </span>
         </div>
 

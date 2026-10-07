@@ -11,9 +11,7 @@ import {
   ApplicationRecord 
 } from '../../types';
 
-import seedDays from '../../data/seeds/days.json';
-import seedTasks from '../../data/seeds/tasks.json';
-import seedResources from '../../data/seeds/resources.json';
+import { DAYS } from '../../data/roadmap';
 
 export interface StudyOsBackupData {
   version: number;
@@ -262,25 +260,74 @@ export async function resetDatabaseToDefaults(): Promise<void> {
   // 2. Reset study_days
   const dayTx = db.transaction('study_days', 'readwrite');
   await dayTx.store.clear();
-  for (const d of seedDays as StudyDay[]) {
-    await dayTx.store.put(d);
+  for (let i = 0; i < DAYS.length; i++) {
+    const d = DAYS[i];
+    const studyDay: StudyDay = {
+      id: `day-${d.date}`,
+      date: d.date,
+      dayNumber: d.day,
+      weekNumber: Math.ceil((i + 1) / 7),
+      phaseId: d.phaseId,
+      phaseName: d.phaseName,
+      topics: d.topics,
+      isBuildDay: d.isBuildDay,
+      englishLink: d.englishLink,
+      hindiLink: d.hindiLink,
+      timeSplit: d.timeSplit,
+      practiceTask: d.practiceTask,
+      doneWhen: d.doneWhen,
+      hours: d.hours,
+      isHoliday: d.isHoliday,
+      holidayName: d.holidayName,
+      dayType: d.isHoliday ? 'rest' : 'non_college',
+      title: d.isHoliday ? (d.holidayName || 'Holiday') : (d.topics[0] || `Day ${d.day}`),
+      plannedMinutes: Math.round(d.hours * 60),
+      isProtectedRestDay: d.isHoliday,
+      isCompleted: false,
+      checklist: {
+        topicsCovered: false,
+        practiceTaskDone: false,
+        doneWhenSatisfied: false
+      },
+      createdAt: '2026-10-08T00:00:00Z',
+      updatedAt: '2026-10-08T00:00:00Z'
+    };
+    await dayTx.store.put(studyDay);
   }
   await dayTx.done;
 
   // 3. Reset study_tasks
   const taskTx = db.transaction('study_tasks', 'readwrite');
   await taskTx.store.clear();
-  for (const t of seedTasks as StudyTask[]) {
-    await taskTx.store.put(t);
+  for (const d of DAYS) {
+    if (!d.isHoliday && d.day !== null) {
+      const studyTask: StudyTask = {
+        id: `task-${d.date}`,
+        studyDayId: `day-${d.date}`,
+        order: 1,
+        title: d.topics.join(' • '),
+        topic: d.topics[0] || 'AI Engineering Study',
+        description: d.practiceTask,
+        definitionOfDone: d.doneWhen,
+        category: d.isBuildDay ? 'project' : 'python_practice',
+        isRequired: true,
+        plannedMinutes: Math.round(d.hours * 60),
+        actualMinutes: 0,
+        status: 'pending',
+        resourceIds: [],
+        originalDate: d.date,
+        currentDate: d.date,
+        createdAt: '2026-10-08T00:00:00Z',
+        updatedAt: '2026-10-08T00:00:00Z'
+      };
+      await taskTx.store.put(studyTask);
+    }
   }
   await taskTx.done;
 
   // 4. Reset resources
   const resTx = db.transaction('resources', 'readwrite');
   await resTx.store.clear();
-  for (const r of seedResources as Resource[]) {
-    await resTx.store.put(r);
-  }
   await resTx.done;
 
   // 5. Clear volatile stores
@@ -300,3 +347,4 @@ export async function resetDatabaseToDefaults(): Promise<void> {
   await appTx.store.clear();
   await appTx.done;
 }
+

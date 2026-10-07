@@ -1,9 +1,62 @@
 import { openDB, IDBPDatabase } from 'idb';
 
-export const DB_NAME = 'kavya_studyos_db';
+export const DB_NAME = 'studyos_v2_90day';
+export const OLD_DB_NAME = 'kavya_studyos_db';
 export const DB_VERSION = 1;
 
 let dbPromise: Promise<IDBPDatabase> | null = null;
+
+/**
+ * Checks if the old V1 database exists with legacy data.
+ */
+export async function hasOldV1Database(): Promise<boolean> {
+  if (typeof window === 'undefined' || !window.indexedDB) return false;
+  try {
+    const databases = await indexedDB.databases?.();
+    if (databases) {
+      return databases.some(db => db.name === OLD_DB_NAME);
+    }
+  } catch {
+    // fallback
+  }
+  return false;
+}
+
+/**
+ * Exports data from the legacy V1 database as a JSON string before deletion.
+ */
+export async function exportOldV1Database(): Promise<string | null> {
+  if (typeof window === 'undefined' || !window.indexedDB) return null;
+  try {
+    const oldDb = await openDB(OLD_DB_NAME, 1);
+    const storeNames = Array.from(oldDb.objectStoreNames);
+    const dump: Record<string, unknown> = {
+      exportedAt: new Date().toISOString(),
+      note: 'Legacy V1 Kavya StudyOS Progress Backup'
+    };
+    for (const name of storeNames) {
+      dump[name] = await oldDb.getAll(name);
+    }
+    oldDb.close();
+    return JSON.stringify(dump, null, 2);
+  } catch (err) {
+    console.warn('Could not read old DB for export:', err);
+    return null;
+  }
+}
+
+/**
+ * Safely deletes the old legacy database.
+ */
+export async function deleteOldV1Database(): Promise<void> {
+  if (typeof window === 'undefined' || !window.indexedDB) return;
+  try {
+    await indexedDB.deleteDatabase(OLD_DB_NAME);
+    console.log('Legacy database', OLD_DB_NAME, 'cleared.');
+  } catch (err) {
+    console.warn('Could not delete old DB:', err);
+  }
+}
 
 export function getDb(): Promise<IDBPDatabase> {
   if (!dbPromise) {

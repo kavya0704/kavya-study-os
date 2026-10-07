@@ -124,8 +124,8 @@ export const BackupRestoreCard: React.FC = () => {
       
       // Reload stores
       await reloadProfile();
-      await loadDate('2026-09-22');
-      await refreshProgress('2026-09-22');
+      await loadDate('2026-10-08');
+      await refreshProgress('2026-10-08');
       setTimeout(() => setRestoreFeedback(null), 4500);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Reset failed';
@@ -319,7 +319,7 @@ export const BackupRestoreCard: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-800 leading-relaxed font-medium">
-              This will erase all custom study progress, logged timer sessions, notes, and resets the 101-day roadmap back to original factory seeds.
+              This will erase all custom study progress, logged timer sessions, notes, and resets the 90-day AI Engineer roadmap back to canonical factory plan.
             </p>
 
             <div>

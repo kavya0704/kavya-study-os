@@ -39,12 +39,12 @@ export const SettingsView: React.FC = () => {
                   {profile.displayName || 'Kavya Shaw'}
                 </h2>
                 <span className="px-1.5 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[9px] font-bold uppercase">
-                  Pro
+                  90-Day AI
                 </span>
               </div>
               <p className="text-[11px] text-slate-700 flex items-center mt-0.5 font-medium">
                 <Calendar size={11} className="mr-1 text-blue-600" />
-                101-Day Machine Learning Sprint
+                90-Day AI Engineer Roadmap
               </p>
             </div>
           </div>
@@ -52,7 +52,7 @@ export const SettingsView: React.FC = () => {
           <div className="text-right">
             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
               <ShieldCheck size={11} className="mr-1 text-emerald-600" />
-              v1.0.0
+              v2.0
             </span>
           </div>
         </div>
@@ -61,11 +61,11 @@ export const SettingsView: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100 text-center">
           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
             <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Target End</div>
-            <div className="text-xs font-bold text-slate-900 mt-0.5">31 Dec 2026</div>
+            <div className="text-xs font-bold text-slate-900 mt-0.5">17 Jan 2027</div>
           </div>
           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Masai Backlog</div>
-            <div className="text-xs font-bold text-amber-700 mt-0.5">25 Lessons</div>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Curriculum</div>
+            <div className="text-xs font-bold text-blue-700 mt-0.5">6 Phases / 90d</div>
           </div>
           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
             <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Timezone</div>
@@ -73,6 +73,7 @@ export const SettingsView: React.FC = () => {
           </div>
         </div>
       </div>
+
 
       {/* College Schedule Configuration */}
       <CollegeScheduleConfig />

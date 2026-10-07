@@ -4,9 +4,9 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
-  GraduationCap
+  Sparkles
 } from 'lucide-react';
+
 import { StudyDay } from '../../types';
 
 interface AppHeaderProps {
@@ -46,26 +46,36 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     day: 'numeric'
   });
 
+  const isBeforeStart = currentDateStr < '2026-10-08';
+  const isHoliday = Boolean(currentDay?.isHoliday || currentDay?.isProtectedRestDay);
+
   const getDayTypeBadgeText = () => {
-    if (!currentDay) return 'Study Day • 6h';
-    if (currentDay.isProtectedRestDay) {
+    if (isBeforeStart) {
       return (
-        <span className="inline-flex items-center">
-          <Sparkles size={11} className="mr-1 text-amber-500" /> Puja Rest Break
+        <span className="inline-flex items-center text-cyan-600 font-bold">
+          <Sparkles size={11} className="mr-1 text-cyan-500" /> Starts 8 Oct 2026
         </span>
       );
     }
-    if (currentDay.dayType === 'college') {
+    if (isHoliday) {
       return (
-        <span className="inline-flex items-center">
-          <GraduationCap size={12} className="mr-1 text-blue-500" /> College Day • 3.5h
+        <span className="inline-flex items-center text-amber-700 font-bold">
+          <Sparkles size={11} className="mr-1 text-amber-500" /> {currentDay?.holidayName || 'Holiday Break'}
         </span>
       );
     }
-    return 'Non-College Day • 6h';
+    return (
+      <span className="inline-flex items-center text-blue-700 font-bold">
+        Phase {currentDay?.phaseId || 1} • 5.5h Study
+      </span>
+    );
   };
 
-  const dayNumber = currentDay?.dayNumber || 1;
+  const getTitleText = () => {
+    if (isBeforeStart) return 'Kickoff';
+    if (isHoliday) return 'Holiday';
+    return `Day ${currentDay?.dayNumber || 1}`;
+  };
 
   return (
     <header className="bg-white/80 backdrop-blur-md pt-5 pb-3 px-5 transition-colors">
@@ -78,7 +88,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             </span>
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
               <span className="w-2 h-2 rounded-full bg-blue-600" />
-              <span>Offline</span>
+              <span>90-Day AI</span>
             </span>
           </div>
 
@@ -107,7 +117,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <div>
             <div className="flex items-baseline space-x-2.5">
               <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-                Day {dayNumber}
+                {getTitleText()}
               </h1>
               <span className="text-base font-normal text-slate-500">
                 {formattedDate}
@@ -120,6 +130,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               </span>
             </div>
           </div>
+
 
           {/* Quick Date Navigation Arrows */}
           <div className="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl">

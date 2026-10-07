@@ -20,6 +20,7 @@ interface TaskState {
   
   loadDate: (dateStr: string) => Promise<void>;
   toggleTask: (taskId: string) => Promise<{ completed: boolean; subtasksMissing?: boolean }>;
+  toggleDayComplete: (dateStr?: string) => Promise<boolean>;
   toggleSubtask: (taskId: string, subtaskKey: keyof StudyTaskSubtasks) => Promise<void>;
   executeUndo: () => Promise<void>;
   rescheduleTask: (taskId: string, newDateStr: string) => Promise<{ success: boolean; error?: string }>;
@@ -103,6 +104,19 @@ export const useTaskStore = create<TaskState>((set, get) => ({
     const db = await getDb();
     await db.put('study_tasks', updatedTask);
 
+    // Sync with study_days record
+    const { currentDay } = get();
+    if (currentDay && currentDay.date === currentDate) {
+      const updatedDay: StudyDay = {
+        ...currentDay,
+        isCompleted: newStatus === 'completed',
+        completedAt: newStatus === 'completed' ? new Date().toISOString() : undefined,
+        updatedAt: new Date().toISOString()
+      };
+      set({ currentDay: updatedDay });
+      await db.put('study_days', updatedDay);
+    }
+
     // Auto-generate spaced reviews if completed
     if (newStatus === 'completed') {
       const revItems = generateSpacedRevisionItems(updatedTask, currentDate);
@@ -116,6 +130,44 @@ export const useTaskStore = create<TaskState>((set, get) => ({
     }
 
     return { completed: newStatus === 'completed' };
+  },
+
+  toggleDayComplete: async (dateStr?: string) => {
+    const targetDate = dateStr || get().currentDate;
+    const db = await getDb();
+    const day: StudyDay | undefined = await db.getFromIndex('study_days', 'by_date', targetDate);
+    if (!day) return false;
+
+    const newCompleted = !day.isCompleted;
+    const now = new Date().toISOString();
+    const updatedDay: StudyDay = {
+      ...day,
+      isCompleted: newCompleted,
+      completedAt: newCompleted ? now : undefined,
+      updatedAt: now
+    };
+
+    const targetTasks = await getTasksForDate(targetDate);
+    const updatedTasks = targetTasks.map(t => ({
+      ...t,
+      status: newCompleted ? ('completed' as TaskStatus) : ('pending' as TaskStatus),
+      completedAt: newCompleted ? now : undefined,
+      updatedAt: now
+    }));
+
+    await db.put('study_days', updatedDay);
+    for (const t of updatedTasks) {
+      await db.put('study_tasks', t);
+    }
+
+    if (targetDate === get().currentDate) {
+      set({
+        currentDay: updatedDay,
+        tasks: updatedTasks
+      });
+    }
+
+    return newCompleted;
   },
 
   executeUndo: async () => {

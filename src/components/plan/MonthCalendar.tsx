@@ -17,7 +17,7 @@ interface MonthDayCell {
   isInRoadmap: boolean;
   isToday: boolean;
   isRestDay: boolean;
-  dayNumber?: number;
+  dayNumber?: number | null;
   totalTasks: number;
   completedTasks: number;
 }
@@ -28,20 +28,33 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
   onJumpToDay
 }) => {
   const initialDate = new Date(`${selectedDate}T00:00:00`);
-  const currentYear = initialDate.getFullYear() || 2026;
-  const [currentMonth, setCurrentMonth] = useState(initialDate.getMonth() || 8);
+  const [currentYear, setCurrentYear] = useState<number>(initialDate.getFullYear() || 2026);
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    initialDate.getMonth() !== undefined ? initialDate.getMonth() : 9
+  );
   const [monthCells, setMonthCells] = useState<MonthDayCell[]>([]);
   const [selectedDayTasks, setSelectedDayTasks] = useState<StudyTask[]>([]);
   const [selectedDayRecord, setSelectedDayRecord] = useState<StudyDay | null>(null);
 
+  const canGoPrev = currentYear > 2026 || (currentYear === 2026 && currentMonth > 9);
+  const canGoNext = currentYear === 2026 || (currentYear === 2027 && currentMonth < 0);
+
   const handlePrevMonth = () => {
-    if (currentMonth > 8) {
+    if (!canGoPrev) return;
+    if (currentMonth === 0) {
+      setCurrentYear(2026);
+      setCurrentMonth(11);
+    } else {
       setCurrentMonth(prev => prev - 1);
     }
   };
 
   const handleNextMonth = () => {
-    if (currentMonth < 11) {
+    if (!canGoNext) return;
+    if (currentMonth === 11) {
+      setCurrentYear(2027);
+      setCurrentMonth(0);
+    } else {
       setCurrentMonth(prev => prev + 1);
     }
   };
@@ -81,7 +94,8 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
         let totalTasks = 0;
         let completedTasks = 0;
-        let dayNum: number | undefined;
+        let dayNum: number | null | undefined;
+        let isRest = false;
 
         if (inRoadmap) {
           try {
@@ -94,6 +108,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           try {
             const dayRec: StudyDay | undefined = await db.get('study_days', `day-${dStr}`);
             dayNum = dayRec?.dayNumber;
+            isRest = Boolean(dayRec?.isHoliday || dayRec?.isProtectedRestDay);
           } catch {
             // Fallback
           }
@@ -105,11 +120,12 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           isCurrentMonth: true,
           isInRoadmap: inRoadmap,
           isToday: isTodayDate(dStr),
-          isRestDay: dStr >= '2026-10-17' && dStr <= '2026-10-21',
+          isRestDay: isRest,
           dayNumber: dayNum,
           totalTasks,
           completedTasks
         });
+
       }
 
       // Pad succeeding days to 42 cells
@@ -171,9 +187,9 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
         <button
           type="button"
           onClick={handlePrevMonth}
-          disabled={currentMonth <= 8}
+          disabled={!canGoPrev}
           className={`p-2 rounded-xl transition-colors ${
-            currentMonth <= 8
+            !canGoPrev
               ? 'text-slate-300 cursor-not-allowed'
               : 'text-slate-700 hover:text-black hover:bg-slate-100'
           }`}
@@ -184,16 +200,16 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
         <div className="text-center">
           <h2 className="text-base font-black text-slate-900">{monthName}</h2>
           <span className="text-xs text-blue-600 font-bold uppercase tracking-wider">
-            101-Day AI/ML Window
+            90-Day AI Engineer Window
           </span>
         </div>
 
         <button
           type="button"
           onClick={handleNextMonth}
-          disabled={currentMonth >= 11}
+          disabled={!canGoNext}
           className={`p-2 rounded-xl transition-colors ${
-            currentMonth >= 11
+            !canGoNext
               ? 'text-slate-300 cursor-not-allowed'
               : 'text-slate-700 hover:text-black hover:bg-slate-100'
           }`}
@@ -201,6 +217,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           <ChevronRight size={20} />
         </button>
       </div>
+
 
       {/* Calendar Grid Card */}
       <div className="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-2.5">

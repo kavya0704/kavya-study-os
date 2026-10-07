@@ -14,27 +14,53 @@ export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'skipped';
 
 export interface RoadmapPhase {
   id: number;
+  name: string;
   title: string;
-  startDate: string;
-  endDate: string;
-  order: number;
-  description: string;
-  exitEvidence: string;
+  startDay: number;
+  endDay: number;
+  learn: string[];
+  build: string[];
+  outcome: string;
+  startDate?: string;
+  endDate?: string;
+  order?: number;
+  description?: string;
+  exitEvidence?: string;
+}
+
+export interface DayChecklist {
+  topicsCovered: boolean;
+  practiceTaskDone: boolean;
+  doneWhenSatisfied: boolean;
 }
 
 export interface StudyDay {
-  id: string; // 'day-2026-09-22'
-  date: string; // '2026-09-22'
-  dayNumber: number; // 1 to 101
-  weekNumber: number; // 1 to 14
-  phaseId: number; // 1 to 8
-  dayType: DayType;
-  title: string;
+  id: string; // 'day-YYYY-MM-DD'
+  date: string; // 'YYYY-MM-DD'
+  dayNumber: number | null; // 1 to 90 (null for holidays)
+  weekNumber: number;
+  phaseId: number; // 1 to 6
+  phaseName: string;
+  topics: string[];
+  isBuildDay: boolean;
+  englishLink: string | null;
+  hindiLink: string | null;
+  timeSplit: string;
+  practiceTask: string;
+  doneWhen: string;
+  hours: number;
+  isHoliday: boolean;
+  holidayName?: string;
+  dayType?: DayType;
+  title?: string;
   plannedMinutes: number;
   isProtectedRestDay: boolean;
+  isCompleted?: boolean;
+  completedAt?: string;
+  checklist?: DayChecklist;
   notes?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface StudyTaskSubtasks {

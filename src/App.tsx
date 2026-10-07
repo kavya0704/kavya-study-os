@@ -349,7 +349,7 @@ export default function App() {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         pendingReviewsCount={dueReviewsCount}
-        backlogRemainingCount={25 - metrics.backlogCompletedCount}
+        backlogRemainingCount={90 - metrics.completedStudyDaysCount}
       />
     </div>
   );

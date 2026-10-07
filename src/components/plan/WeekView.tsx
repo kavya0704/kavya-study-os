@@ -77,8 +77,8 @@ export const WeekView: React.FC<WeekViewProps> = ({
           }
 
           const isRest = Boolean(
-            dayRecord?.isProtectedRestDay ||
-            (dStr >= '2026-10-17' && dStr <= '2026-10-21')
+            dayRecord?.isHoliday ||
+            dayRecord?.isProtectedRestDay
           );
 
           const completed = allTasks.filter(t => t.status === 'completed').length;
@@ -119,14 +119,14 @@ export const WeekView: React.FC<WeekViewProps> = ({
     const prev = new Date(monday);
     prev.setDate(prev.getDate() - 7);
     const s = prev.toISOString().split('T')[0];
-    if (s >= '2026-09-21') onSelectDate(s);
+    if (s >= '2026-10-05') onSelectDate(s);
   };
 
   const handleNextWeek = () => {
     const next = new Date(monday);
     next.setDate(next.getDate() + 7);
     const s = next.toISOString().split('T')[0];
-    if (s <= '2026-12-31') onSelectDate(s);
+    if (s <= '2027-01-18') onSelectDate(s);
   };
 
   return (
@@ -144,13 +144,14 @@ export const WeekView: React.FC<WeekViewProps> = ({
 
         <div className="text-center">
           <div className="text-xs font-black uppercase tracking-wider text-blue-600">
-            Week {currentWeekNumber} of 14
+            Week {currentWeekNumber} of 15
           </div>
           <div className="text-xs text-slate-900 font-bold mt-0.5">
             {monday.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} –{' '}
             {sunday.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
           </div>
         </div>
+
 
         <button
           type="button"
