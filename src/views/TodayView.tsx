@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  CheckCircle2, 
-  Circle, 
   Sparkles, 
   Youtube, 
   ExternalLink, 
-  Clock, 
-  Calendar, 
   ChevronRight, 
   AlertCircle, 
   PartyPopper, 
   Compass, 
-  Globe, 
   Search,
-  BookOpen
+  BookOpen,
+  CheckCircle2,
+  Clock,
+  Layers
 } from 'lucide-react';
 import { useTaskStore } from '../stores/useTaskStore';
 import { useProgressStore } from '../stores/useProgressStore';
+import { useTimerStore } from '../stores/useTimerStore';
 import { AppHeader } from '../components/layout/AppHeader';
+import { ProgressRing } from '../components/common/ProgressRing';
+import { NextActionHero } from '../components/task/NextActionHero';
 import { Toast } from '../components/common/Toast';
 import { ReflectionDrawer } from '../components/notes/ReflectionDrawer';
 import { NotesSearchModal } from '../components/notes/NotesSearchModal';
@@ -31,10 +32,10 @@ import {
 } from '../data/roadmap';
 import { getLocalCalendarDate } from '../engines/dateUtils';
 import { getDb } from '../services/db';
-import { StudyDay } from '../types';
+import { StudyDay, StudyTask } from '../types';
 
 interface TodayViewProps {
-  onOpenTimerModal?: (task?: any) => void;
+  onOpenTimerModal?: (task?: StudyTask) => void;
   onOpenSettings?: () => void;
   onOpenNotifications?: () => void;
   onNavigateToRoadmap?: () => void;
@@ -43,20 +44,20 @@ interface TodayViewProps {
 export type LinkLanguagePreference = 'both' | 'english' | 'hindi';
 
 export const TodayView: React.FC<TodayViewProps> = ({
-  onOpenTimerModal: _onOpenTimerModal,
+  onOpenTimerModal,
   onOpenSettings,
-  onOpenNotifications,
-  onNavigateToRoadmap: _onNavigateToRoadmap
+  onOpenNotifications
 }) => {
   const { 
     currentDate, 
     currentDay, 
+    tasks,
     loadDate, 
     toggleDayComplete
   } = useTaskStore();
 
-
   const { metrics, refreshProgress } = useProgressStore();
+  const { startTimer } = useTimerStore();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAIDiagnosticOpen, setIsAIDiagnosticOpen] = useState(false);
@@ -152,6 +153,13 @@ export const TodayView: React.FC<TodayViewProps> = ({
     }
   };
 
+  const handleStartTimer = (taskToStart: StudyTask) => {
+    startTimer(taskToStart.id, taskToStart.title);
+    if (onOpenTimerModal) {
+      onOpenTimerModal(taskToStart);
+    }
+  };
+
   // State checks
   const isBeforeStart = activeDate < ROADMAP_START_DATE;
   const isAfterEnd = activeDate > ROADMAP_END_DATE;
@@ -163,9 +171,34 @@ export const TodayView: React.FC<TodayViewProps> = ({
     (new Date(`${ROADMAP_START_DATE}T00:00:00Z`).getTime() - new Date(`${todayRealDate}T00:00:00Z`).getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  const completedTasksCount = isCompleted ? 1 : 0;
+  const totalTasksCount = isHoliday ? 0 : 1;
+  const plannedMinutes = isHoliday ? 0 : 330;
+
+  // Active primary task representing today's study focus
+  const currentTask: StudyTask | undefined = tasks[0] || (roadmapDayInfo ? {
+    id: `task-${activeDate}`,
+    studyDayId: `day-${activeDate}`,
+    order: 1,
+    title: roadmapDayInfo.topics.join(' • '),
+    topic: roadmapDayInfo.topics[0] || 'AI Engineering Study',
+    description: roadmapDayInfo.practiceTask,
+    definitionOfDone: roadmapDayInfo.doneWhen,
+    category: roadmapDayInfo.isBuildDay ? 'project' : 'python_practice',
+    isRequired: true,
+    plannedMinutes: 330,
+    actualMinutes: 0,
+    status: isCompleted ? 'completed' : 'pending',
+    resourceIds: [],
+    originalDate: activeDate,
+    currentDate: activeDate,
+    createdAt: '2026-10-08T00:00:00Z',
+    updatedAt: '2026-10-08T00:00:00Z'
+  } : undefined);
+
   return (
-    <div className="min-h-screen bg-[#0b141a] text-slate-100 flex flex-col font-sans select-none pb-28">
-      {/* Top Header */}
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans select-none pb-28">
+      {/* Top Header (Clean Light Theme) */}
       <AppHeader
         currentDay={currentDay}
         currentDateStr={activeDate}
@@ -184,18 +217,18 @@ export const TodayView: React.FC<TodayViewProps> = ({
         onOpenNotifications={onOpenNotifications}
       />
 
-      <main className="flex-1 max-w-md mx-auto w-full px-4 pt-3 space-y-4">
+      <main className="flex-1 max-w-md mx-auto w-full px-4 pt-4 space-y-4">
         {/* Catch-Up Banner (if user is behind) */}
         {missedDaysCount > 0 && !isBeforeStart && (
-          <div className="bg-amber-950/40 border border-amber-600/40 rounded-2xl p-3.5 flex items-start justify-between gap-3 text-amber-200">
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-amber-900 flex items-start justify-between gap-3 shadow-xs">
             <div className="flex items-start space-x-2.5">
-              <AlertCircle size={18} className="text-amber-400 shrink-0 mt-0.5" />
+              <AlertCircle size={18} className="text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-amber-300">
+                <p className="text-xs font-bold text-amber-950">
                   You are {missedDaysCount} {missedDaysCount === 1 ? 'day' : 'days'} behind schedule
                 </p>
-                <p className="text-[11px] text-amber-200/80 mt-0.5">
-                  Anti-guilt guarantee: take it one step at a time.
+                <p className="text-[11px] text-amber-800 mt-0.5">
+                  Anti-guilt guarantee: take it one step at a time. Your streak is safe.
                 </p>
               </div>
             </div>
@@ -206,7 +239,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
                   loadDate(earliestMissedDate);
                   refreshProgress(earliestMissedDate);
                 }}
-                className="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-bold text-[11px] rounded-xl shrink-0 transition-transform active:scale-95"
+                className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] rounded-xl shrink-0 transition-transform active:scale-95 shadow-xs"
               >
                 Review Missed
               </button>
@@ -216,33 +249,33 @@ export const TodayView: React.FC<TodayViewProps> = ({
 
         {/* State 1: Before Start Date (e.g. Oct 7, 2026) */}
         {isBeforeStart ? (
-          <div className="bg-[#121e26] border border-cyan-800/40 rounded-3xl p-6 text-center space-y-4 shadow-xl">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 text-center space-y-4 shadow-sm">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
               <Compass size={28} />
             </div>
 
             <div className="space-y-1">
-              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-cyan-950 text-cyan-300 border border-cyan-800/60">
+              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
                 Kickoff Imminent
               </span>
-              <h2 className="text-2xl font-black text-white pt-2">
+              <h2 className="text-2xl font-black text-slate-900 pt-2">
                 Starts in {daysUntilStart > 0 ? `${daysUntilStart} Day${daysUntilStart > 1 ? 's' : ''}` : 'Less than 24 hours'}
               </h2>
-              <p className="text-xs text-slate-400 max-w-xs mx-auto pt-1 leading-relaxed">
-                90-day AI Engineer roadmap starts tomorrow, <strong className="text-slate-200">October 8, 2026</strong>.
+              <p className="text-xs text-slate-600 max-w-xs mx-auto pt-1 leading-relaxed">
+                90-day AI Engineer roadmap officially starts tomorrow, <strong className="text-slate-900">October 8, 2026</strong>.
               </p>
             </div>
 
             {/* Tomorrow Preview Card */}
-            <div className="p-4 rounded-2xl bg-[#17252f] border border-slate-700/60 text-left space-y-2">
-              <div className="flex items-center justify-between text-[11px] font-bold text-cyan-400 uppercase">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left space-y-1.5">
+              <div className="flex items-center justify-between text-[11px] font-bold text-blue-600 uppercase">
                 <span>Tomorrow • Day 1</span>
-                <span>5.5 Hours</span>
+                <span>5.5 Hours Target</span>
               </div>
-              <h3 className="text-sm font-bold text-white">
+              <h3 className="text-sm font-bold text-slate-900">
                 Software Engineering Foundation
               </h3>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-600">
                 Python Essentials, Memory Layout & Virtual Environments
               </p>
             </div>
@@ -253,7 +286,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
                 loadDate(ROADMAP_START_DATE);
                 refreshProgress(ROADMAP_START_DATE);
               }}
-              className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold text-xs rounded-2xl shadow-lg transition-transform active:scale-98 flex items-center justify-center space-x-2"
+              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-2xl shadow-sm transition-transform active:scale-98 flex items-center justify-center space-x-2"
             >
               <span>Preview Day 1 Curriculum</span>
               <ChevronRight size={15} />
@@ -261,49 +294,49 @@ export const TodayView: React.FC<TodayViewProps> = ({
           </div>
         ) : isAfterEnd ? (
           /* State 2: Course Complete */
-          <div className="bg-[#121e26] border border-emerald-500/40 rounded-3xl p-6 text-center space-y-4 shadow-xl">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="bg-white border border-emerald-200 rounded-3xl p-6 text-center space-y-4 shadow-sm">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <PartyPopper size={32} />
             </div>
             <div className="space-y-1">
-              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-800">
+              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
                 Mission Accomplished
               </span>
-              <h2 className="text-2xl font-black text-white pt-2">Course Complete!</h2>
-              <p className="text-xs text-slate-300 max-w-xs mx-auto leading-relaxed">
+              <h2 className="text-2xl font-black text-slate-900 pt-2">Course Complete!</h2>
+              <p className="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
                 You have finished all 90 study days of the AI Engineer curriculum. Ready for production AI engineering!
               </p>
             </div>
           </div>
         ) : isHoliday ? (
-          /* State 3: Festive Holiday Break */
-          <div className="bg-[#191d17] border border-amber-500/40 rounded-3xl p-5 space-y-4 shadow-xl">
-            <div className="flex items-center space-x-2.5 text-amber-400">
-              <Sparkles size={22} />
+          /* State 3: Festive Holiday Break (Clean Amber Card matching original) */
+          <div className="bg-amber-50 border border-amber-200 rounded-3xl p-5 space-y-4 shadow-xs">
+            <div className="flex items-center space-x-2.5 text-amber-900">
+              <Sparkles size={22} className="text-amber-500 shrink-0" />
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-500">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-700">
                   Protected Rest Holiday
                 </span>
-                <h2 className="text-base font-black text-amber-200">
+                <h2 className="text-base font-black text-amber-950">
                   {roadmapDayInfo?.holidayName || 'Holiday Break'}
                 </h2>
               </div>
             </div>
 
-            <p className="text-xs text-amber-100/90 leading-relaxed bg-amber-950/40 p-3.5 rounded-2xl border border-amber-800/40">
+            <p className="text-xs text-amber-900 font-medium leading-relaxed bg-white/70 p-3.5 rounded-2xl border border-amber-200">
               No rest-of-plan change. Your streak is completely protected and zero study tasks are scheduled for today. Celebrate and recharge with family!
             </p>
 
             {nextStudyDay && (
-              <div className="p-3.5 rounded-2xl bg-[#121e26] border border-slate-700/60 flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-white border border-amber-200 flex items-center justify-between">
                 <div>
-                  <div className="text-[10px] font-bold text-slate-400 uppercase">
+                  <div className="text-[10px] font-bold text-amber-700 uppercase">
                     Next Study Day
                   </div>
-                  <div className="text-xs font-bold text-white mt-0.5">
+                  <div className="text-xs font-bold text-slate-900 mt-0.5">
                     Day {nextStudyDay.day} • {nextStudyDay.date}
                   </div>
-                  <div className="text-[11px] text-slate-300 truncate max-w-[220px]">
+                  <div className="text-[11px] text-slate-600 truncate max-w-[220px]">
                     {nextStudyDay.topics.join(' • ')}
                   </div>
                 </div>
@@ -313,7 +346,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
                     loadDate(nextStudyDay.date);
                     refreshProgress(nextStudyDay.date);
                   }}
-                  className="p-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl"
+                  className="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition-colors"
                   title="View next study day"
                 >
                   <ChevronRight size={18} />
@@ -322,224 +355,214 @@ export const TodayView: React.FC<TodayViewProps> = ({
             )}
           </div>
         ) : (
-          /* State 4: Normal Study Day */
+          /* State 4: Normal Study Day (Exact Previous UI/UX Design) */
           <div className="space-y-4">
-            {/* Primary Study Day Card */}
-            <div className={`rounded-3xl border p-5 space-y-4 transition-all shadow-xl ${
-              isCompleted 
-                ? 'bg-[#10221c] border-emerald-500/40' 
-                : 'bg-[#121e26] border-slate-800'
-            }`}>
-              {/* Phase & Day Banner */}
-              <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                <div className="flex items-center space-x-2">
-                  <span className="px-2.5 py-1 rounded-xl text-xs font-black uppercase tracking-wide bg-blue-950 text-blue-300 border border-blue-800/60">
-                    Phase {roadmapDayInfo?.phaseId || 1}: {roadmapDayInfo?.phaseName}
-                  </span>
-                  {roadmapDayInfo?.isBuildDay && (
-                    <span className="px-2 py-0.5 rounded-xl text-[10px] font-bold uppercase bg-purple-950 text-purple-300 border border-purple-800">
-                      🛠️ Build Day
-                    </span>
-                  )}
-                </div>
-                <span className="text-xs font-black text-cyan-400">
-                  Day {roadmapDayInfo?.day} of 90
+            {/* 1. Today's Progress Card (Circular Ring from Previous Design) */}
+            <ProgressRing
+              completedTasks={completedTasksCount}
+              totalTasks={totalTasksCount}
+              focusedMinutes={metrics.focusedMinutesToday}
+              plannedMinutes={plannedMinutes}
+              isRestDay={isHoliday}
+            />
+
+            {/* 2. Next Up Hero Card (Previous Design with Start Focus & Mark Complete) */}
+            <NextActionHero
+              task={currentTask}
+              onStartTimer={handleStartTimer}
+              onToggleComplete={() => handleToggleComplete()}
+              isRestDay={isHoliday}
+            />
+
+            {/* 3. Daily Focus Curriculum Card */}
+            <section className="space-y-3 pt-1">
+              <div className="flex items-center justify-between px-1">
+                <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+                  Daily focus
+                </h2>
+                <span className="text-xs text-slate-500 font-medium">
+                  Day {roadmapDayInfo?.day} of 90 • 5.5h
                 </span>
               </div>
 
-              {/* Main Topics */}
-              <div className="space-y-1">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Today's Curriculum Focus
+              {/* Curriculum Breakdown Box */}
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3.5 shadow-xs">
+                {/* Topic and Phase header */}
+                <div>
+                  <div className="flex items-center space-x-2 mb-1">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
+                      Phase {roadmapDayInfo?.phaseId}: {roadmapDayInfo?.phaseName}
+                    </span>
+                    {roadmapDayInfo?.isBuildDay && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-50 text-purple-700 border border-purple-200">
+                        🛠️ Build Project
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 mt-1.5 leading-snug">
+                    {roadmapDayInfo?.topics.join(' • ')}
+                  </h3>
                 </div>
-                <h2 className="text-base font-black text-white leading-snug">
-                  {roadmapDayInfo?.topics.join(' • ')}
-                </h2>
-              </div>
 
-              {/* Time Split & Hours Badge */}
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 rounded-2xl bg-[#17252f] border border-slate-700/60 flex items-center space-x-2">
-                  <Clock size={15} className="text-cyan-400 shrink-0" />
-                  <div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Pacing</div>
-                    <div className="text-[11px] font-semibold text-slate-200">
+                {/* Pacing & Target Split */}
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center space-x-1.5 text-blue-600 font-bold text-[10px] uppercase">
+                      <Clock size={12} />
+                      <span>Time Split</span>
+                    </div>
+                    <div className="text-[11px] font-medium text-slate-800 mt-0.5">
                       {roadmapDayInfo?.timeSplit}
                     </div>
                   </div>
-                </div>
 
-                <div className="p-2.5 rounded-2xl bg-[#17252f] border border-slate-700/60 flex items-center space-x-2">
-                  <Calendar size={15} className="text-indigo-400 shrink-0" />
-                  <div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Target Time</div>
-                    <div className="text-[11px] font-semibold text-slate-200">
-                      {roadmapDayInfo?.hours || 5.5}h Focus Session
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center space-x-1.5 text-indigo-600 font-bold text-[10px] uppercase">
+                      <Layers size={12} />
+                      <span>Focus Target</span>
+                    </div>
+                    <div className="text-[11px] font-medium text-slate-800 mt-0.5">
+                      {roadmapDayInfo?.hours || 5.5}h Deep Work
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Practice Task */}
-              <div className="p-3.5 rounded-2xl bg-[#17252f] border border-slate-700/60 space-y-1">
-                <div className="flex items-center space-x-1.5 text-xs font-bold text-cyan-300">
-                  <BookOpen size={14} />
-                  <span>Hands-on Practice Task</span>
-                </div>
-                <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                  {roadmapDayInfo?.practiceTask}
-                </p>
-              </div>
-
-              {/* Done When Criteria */}
-              <div className="p-3.5 rounded-2xl bg-[#17252f] border border-slate-700/60 space-y-1">
-                <div className="flex items-center space-x-1.5 text-xs font-bold text-emerald-400">
-                  <CheckCircle2 size={14} />
-                  <span>Definition of Done</span>
-                </div>
-                <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                  {roadmapDayInfo?.doneWhen}
-                </p>
-              </div>
-
-              {/* Language Selector Strip */}
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-slate-400 font-bold flex items-center space-x-1">
-                  <Globe size={13} className="text-cyan-400" />
-                  <span>Lecture Language</span>
-                </span>
-                <div className="flex items-center space-x-1 bg-[#17252f] p-1 rounded-xl border border-slate-700/60">
-                  {(['both', 'english', 'hindi'] as LinkLanguagePreference[]).map(lang => (
-                    <button
-                      key={lang}
-                      type="button"
-                      onClick={() => handleLanguageChange(lang)}
-                      className={`px-2 py-0.5 rounded-lg text-[10px] font-bold capitalize transition-colors ${
-                        languagePref === lang
-                          ? 'bg-blue-600 text-white'
-                          : 'text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      {lang}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Video Lecture Tap Buttons */}
-              <div className="grid grid-cols-1 gap-2 pt-1">
-                {/* English Video Button */}
-                {(languagePref === 'both' || languagePref === 'english') && (
-                  <div>
-                    {roadmapDayInfo?.englishLink ? (
-                      <a
-                        href={roadmapDayInfo.englishLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-3 px-4 rounded-2xl bg-red-950/40 hover:bg-red-900/50 border border-red-700/60 text-red-200 font-bold text-xs flex items-center justify-between transition-transform active:scale-98"
-                      >
-                        <div className="flex items-center space-x-2.5">
-                          <Youtube size={18} className="text-red-400" />
-                          <span>Watch English Lecture / Playlist</span>
-                        </div>
-                        <ExternalLink size={14} className="text-red-400" />
-                      </a>
-                    ) : (
-                      <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
-                          `${roadmapDayInfo?.topics[0] || 'AI Engineering'} tutorial full course english`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-2.5 px-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium text-xs flex items-center justify-between"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <Search size={14} className="text-slate-400" />
-                          <span>English Lecture: Search on YouTube</span>
-                        </div>
-                        <ExternalLink size={13} className="text-slate-400" />
-                      </a>
-                    )}
+                {/* Practice Task */}
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                  <div className="flex items-center space-x-1.5 text-xs font-bold text-blue-700">
+                    <BookOpen size={13} />
+                    <span>Hands-on Practice Task</span>
                   </div>
-                )}
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
+                    {roadmapDayInfo?.practiceTask}
+                  </p>
+                </div>
 
-                {/* Hindi Video Button */}
-                {(languagePref === 'both' || languagePref === 'hindi') && (
-                  <div>
-                    {roadmapDayInfo?.hindiLink ? (
-                      <a
-                        href={roadmapDayInfo.hindiLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-3 px-4 rounded-2xl bg-orange-950/40 hover:bg-orange-900/50 border border-orange-700/60 text-orange-200 font-bold text-xs flex items-center justify-between transition-transform active:scale-98"
-                      >
-                        <div className="flex items-center space-x-2.5">
-                          <Youtube size={18} className="text-orange-400" />
-                          <span>Watch Hindi Lecture / Playlist</span>
-                        </div>
-                        <ExternalLink size={14} className="text-orange-400" />
-                      </a>
-                    ) : (
-                      <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
-                          `${roadmapDayInfo?.topics[0] || 'AI Engineering'} tutorial hindi`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-2.5 px-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium text-xs flex items-center justify-between"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <Search size={14} className="text-slate-400" />
-                          <span>Hindi Lecture: Search on YouTube</span>
-                        </div>
-                        <ExternalLink size={13} className="text-slate-400" />
-                      </a>
-                    )}
+                {/* Done When Criteria */}
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                  <div className="flex items-center space-x-1.5 text-xs font-bold text-emerald-700">
+                    <CheckCircle2 size={13} />
+                    <span>Definition of Done</span>
                   </div>
-                )}
-              </div>
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
+                    {roadmapDayInfo?.doneWhen}
+                  </p>
+                </div>
 
-              {/* Big "Mark Day Complete" Button */}
-              <button
-                type="button"
-                onClick={handleToggleComplete}
-                className={`w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center space-x-2 transition-transform active:scale-98 shadow-xl ${
-                  isCompleted
-                    ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
-                    : 'bg-blue-600 hover:bg-blue-500 text-white'
-                }`}
-              >
-                {isCompleted ? (
-                  <>
-                    <CheckCircle2 size={18} />
-                    <span>Day {roadmapDayInfo?.day} Completed (Tap to Undo)</span>
-                  </>
-                ) : (
-                  <>
-                    <Circle size={18} />
-                    <span>Mark Day {roadmapDayInfo?.day} as Complete</span>
-                  </>
-                )}
-              </button>
-            </div>
+                {/* Video Resources with Language Preference */}
+                <div className="pt-2 border-t border-slate-100 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-700">
+                      Video Lecture Links
+                    </span>
+                    <div className="flex items-center space-x-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+                      {(['both', 'english', 'hindi'] as LinkLanguagePreference[]).map(lang => (
+                        <button
+                          key={lang}
+                          type="button"
+                          onClick={() => handleLanguageChange(lang)}
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold capitalize transition-colors ${
+                            languagePref === lang
+                              ? 'bg-white text-blue-600 shadow-xs'
+                              : 'text-slate-500 hover:text-slate-900'
+                          }`}
+                        >
+                          {lang}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* English Link Button */}
+                  {(languagePref === 'both' || languagePref === 'english') && (
+                    <div>
+                      {roadmapDayInfo?.englishLink ? (
+                        <a
+                          href={roadmapDayInfo.englishLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2.5 px-3.5 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 font-bold text-xs flex items-center justify-between transition-colors shadow-xs"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Youtube size={16} className="text-red-600" />
+                            <span>English Lecture / Playlist</span>
+                          </div>
+                          <ExternalLink size={13} className="text-red-500" />
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                            `${roadmapDayInfo?.topics[0] || 'AI Engineering'} tutorial full course english`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-xs flex items-center justify-between transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Search size={14} className="text-slate-500" />
+                            <span>English Lecture: Search on YouTube</span>
+                          </div>
+                          <ExternalLink size={13} className="text-slate-400" />
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Hindi Link Button */}
+                  {(languagePref === 'both' || languagePref === 'hindi') && (
+                    <div>
+                      {roadmapDayInfo?.hindiLink ? (
+                        <a
+                          href={roadmapDayInfo.hindiLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2.5 px-3.5 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-orange-700 font-bold text-xs flex items-center justify-between transition-colors shadow-xs"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Youtube size={16} className="text-orange-600" />
+                            <span>Hindi Lecture / Playlist</span>
+                          </div>
+                          <ExternalLink size={13} className="text-orange-500" />
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                            `${roadmapDayInfo?.topics[0] || 'AI Engineering'} tutorial hindi`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-xs flex items-center justify-between transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Search size={14} className="text-slate-500" />
+                            <span>Hindi Lecture: Search on YouTube</span>
+                          </div>
+                          <ExternalLink size={13} className="text-slate-400" />
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
 
             {/* Tomorrow Preview Card */}
             {nextDayInfo && (
-              <div className="p-4 rounded-3xl bg-[#121e26] border border-slate-800 space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase">
-                  <span>Tomorrow: Preview</span>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase">
+                  <span>Tomorrow Preview</span>
                   {nextDayInfo.isHoliday ? (
-                    <span className="text-amber-400">✨ Festival Break</span>
+                    <span className="text-amber-600 font-bold">✨ Festival Break</span>
                   ) : (
-                    <span className="text-cyan-400">Day {nextDayInfo.day}</span>
+                    <span className="text-blue-600 font-bold">Day {nextDayInfo.day}</span>
                   )}
                 </div>
-                <h4 className="text-xs font-bold text-white">
+                <h4 className="text-xs font-bold text-slate-900">
                   {nextDayInfo.isHoliday
                     ? nextDayInfo.holidayName
                     : nextDayInfo.topics.join(' • ')}
                 </h4>
-                <p className="text-[11px] text-slate-400 line-clamp-1">
+                <p className="text-[11px] text-slate-600 line-clamp-1">
                   {nextDayInfo.practiceTask}
                 </p>
               </div>
@@ -547,8 +570,8 @@ export const TodayView: React.FC<TodayViewProps> = ({
           </div>
         )}
 
-        {/* Daily Reflection Notes Section */}
-        <section className="pt-1">
+        {/* Daily Reflection Drawer (Original Component) */}
+        <section className="pt-2">
           <ReflectionDrawer currentDateStr={activeDate} />
         </section>
       </main>
