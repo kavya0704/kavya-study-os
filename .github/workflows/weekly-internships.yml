@@ -1,0 +1,32 @@
+name: Weekly 10 Internships Auto-Update
+
+on:
+  schedule:
+    # Runs every Monday at 00:00 UTC (05:30 AM IST)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI anytime
+
+permissions:
+  contents: write
+
+jobs:
+  update-internships:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Weekly Internships Rotation Script
+        run: node src/scripts/updateWeeklyInternships.js
+
+      - name: Commit and Push Changes to Main
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/internships.ts
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(internships): auto-update 10 weekly internships for new sprint cycle" && git push origin main)

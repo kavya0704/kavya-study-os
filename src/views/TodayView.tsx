@@ -11,7 +11,8 @@ import {
   BookOpen,
   CheckCircle2,
   Clock,
-  Layers
+  Layers,
+  Briefcase
 } from 'lucide-react';
 import { useTaskStore } from '../stores/useTaskStore';
 import { useProgressStore } from '../stores/useProgressStore';
@@ -39,6 +40,7 @@ interface TodayViewProps {
   onOpenSettings?: () => void;
   onOpenNotifications?: () => void;
   onNavigateToRoadmap?: () => void;
+  onOpenInternships?: () => void;
 }
 
 export type LinkLanguagePreference = 'both' | 'english' | 'hindi';
@@ -46,7 +48,8 @@ export type LinkLanguagePreference = 'both' | 'english' | 'hindi';
 export const TodayView: React.FC<TodayViewProps> = ({
   onOpenTimerModal,
   onOpenSettings,
-  onOpenNotifications
+  onOpenNotifications,
+  onOpenInternships
 }) => {
   const { 
     currentDate, 
@@ -292,6 +295,37 @@ export const TodayView: React.FC<TodayViewProps> = ({
               <span>Preview Day 1 Curriculum</span>
               <ChevronRight size={15} />
             </button>
+
+            {/* Weekly Internship Radar Card */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-blue-950 text-white text-left space-y-2.5 shadow-sm border border-slate-800">
+              <div className="flex items-center justify-between text-[11px] font-bold text-blue-300 uppercase">
+                <span className="flex items-center space-x-1.5">
+                  <Briefcase size={13} className="text-blue-400" />
+                  <span>Weekly Internship Radar</span>
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-[10px]">
+                  10 Fresh Openings
+                </span>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  10 Active AI & Software Roles Open This Week
+                </h4>
+                <p className="text-xs text-slate-300 pt-0.5">
+                  Microsoft, Google, NVIDIA, Swiggy, Razorpay & more. Pre-apply now before kickoff.
+                </p>
+              </div>
+              {onOpenInternships && (
+                <button
+                  type="button"
+                  onClick={onOpenInternships}
+                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 active:scale-98"
+                >
+                  <span>View 10 Weekly Internships</span>
+                  <ChevronRight size={14} />
+                </button>
+              )}
+            </div>
           </div>
         ) : isAfterEnd ? (
           /* State 2: Course Complete */
@@ -402,6 +436,37 @@ export const TodayView: React.FC<TodayViewProps> = ({
                   </p>
                 </div>
               )}
+
+              {/* Weekly Internship Radar Card */}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-blue-950 text-white space-y-2 border border-slate-800 shadow-xs">
+                <div className="flex items-center justify-between text-[11px] font-bold text-blue-300 uppercase">
+                  <span className="flex items-center space-x-1.5">
+                    <Briefcase size={12} className="text-blue-400" />
+                    <span>Internship Radar</span>
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-[10px]">
+                    10 Open
+                  </span>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white">
+                    Fresh AI/ML Openings • Week of Oct 10–17
+                  </h4>
+                  <p className="text-[11px] text-slate-300 pt-0.5">
+                    Microsoft, Google, NVIDIA, Razorpay & more.
+                  </p>
+                </div>
+                {onOpenInternships && (
+                  <button
+                    type="button"
+                    onClick={onOpenInternships}
+                    className="w-full py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center space-x-1"
+                  >
+                    <span>Browse 10 Internships</span>
+                    <ChevronRight size={13} />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Right Column (7 Cols on Laptop): Daily Focus Curriculum & Reflections */}

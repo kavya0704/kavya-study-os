@@ -5,3 +5,4 @@ export * from './useNoteStore';
 export * from './useProgressStore';
 export * from './useRevisionStore';
 export * from './useResourceStore';
+export * from './useInternshipStore';

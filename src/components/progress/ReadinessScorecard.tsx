@@ -6,6 +6,7 @@ import {
   ChevronDown, 
   ChevronUp 
 } from 'lucide-react';
+import { useInternshipStore } from '../../stores/useInternshipStore';
 
 interface ReadinessDimension {
   id: string;
@@ -147,6 +148,7 @@ export const ReadinessScorecard: React.FC = () => {
     }
   };
 
+  const appliedCount = useInternshipStore(state => state.getAppliedCount());
   const readyCount = Object.values(statuses).filter(s => s === 'ready').length;
   const totalCount = SCORECARD_DIMENSIONS.length;
   const percentage = Math.round((readyCount / totalCount) * 100);
@@ -241,7 +243,9 @@ export const ReadinessScorecard: React.FC = () => {
                       {dim.description}
                     </p>
                     <span className="text-[11px] font-bold text-blue-700 block mt-1">
-                      Proof: {dim.proofCriterion}
+                      Proof: {dim.id === 'internship_applications' && appliedCount > 0
+                        ? `${appliedCount} / 40 applications submitted in StudyOS Tracker`
+                        : dim.proofCriterion}
                     </span>
                   </div>
 

@@ -3,7 +3,9 @@ import {
   Search, 
   X, 
   Plus, 
-  Sparkles 
+  Sparkles,
+  Briefcase,
+  BookOpen
 } from 'lucide-react';
 import { Resource } from '../types';
 import { useResourceStore } from '../stores/useResourceStore';
@@ -13,8 +15,10 @@ import {
   BrokenLinkModal, 
   AddCustomResourceModal 
 } from '../components/resources';
+import { InternshipBoard } from '../components/internships';
 
 export const ResourcesView: React.FC = () => {
+  const [activeSection, setActiveSection] = useState<'internships' | 'canonical'>('internships');
   const {
     resources,
     isLoading,
@@ -71,8 +75,44 @@ export const ResourcesView: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
-      {/* Title & Add Action */}
-      <div className="flex items-center justify-between">
+      {/* Top Navigation Switcher: Weekly Internships vs Canonical Study Materials */}
+      <div className="flex items-center justify-center p-1 bg-slate-200/80 rounded-2xl max-w-md mx-auto shadow-xs">
+        <button
+          type="button"
+          onClick={() => setActiveSection('internships')}
+          className={`flex-1 py-2 px-3 text-xs font-bold rounded-xl transition-all flex items-center justify-center space-x-1.5 ${
+            activeSection === 'internships'
+              ? 'bg-white text-blue-600 shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Briefcase size={14} />
+          <span>10 Weekly Internships</span>
+          <span className="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-blue-100 text-blue-700">
+            Fresh
+          </span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveSection('canonical')}
+          className={`flex-1 py-2 px-3 text-xs font-bold rounded-xl transition-all flex items-center justify-center space-x-1.5 ${
+            activeSection === 'canonical'
+              ? 'bg-white text-blue-600 shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <BookOpen size={14} />
+          <span>Study Docs (62)</span>
+        </button>
+      </div>
+
+      {activeSection === 'internships' ? (
+        <InternshipBoard />
+      ) : (
+        <>
+          {/* Title & Add Action */}
+          <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center space-x-2">
             <span>Canonical Resources</span>
@@ -194,6 +234,8 @@ export const ResourcesView: React.FC = () => {
         isOpen={isAddCustomOpen}
         onClose={() => setIsAddCustomOpen(false)}
       />
+        </>
+      )}
     </div>
   );
 };

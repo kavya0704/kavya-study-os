@@ -162,6 +162,7 @@ export default function App() {
             onOpenTimerModal={handleOpenTimerModal}
             onOpenSettings={() => setIsSettingsOpen(true)}
             onOpenNotifications={() => setActiveTab('revision')}
+            onOpenInternships={() => setActiveTab('resources')}
           />
         )}
 
