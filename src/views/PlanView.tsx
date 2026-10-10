@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { StudyTask } from '../types';
 import { useTaskStore } from '../stores/useTaskStore';
-import { getTodayDateString } from '../engines';
+import { ROADMAP_START, ROADMAP_END } from '../engines';
 import { 
   DayPlanView, 
   WeekView, 
@@ -32,12 +32,15 @@ export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
   } = useTaskStore();
 
   const [activeMode, setActiveMode] = useState<PlanMode>('week');
-  const [selectedDate, setSelectedDate] = useState(currentDate || getTodayDateString());
+  const defaultPlanDate = (currentDate >= ROADMAP_START && currentDate <= ROADMAP_END)
+    ? currentDate
+    : ROADMAP_START;
+  const [selectedDate, setSelectedDate] = useState(defaultPlanDate);
   const [selectedTaskForDetails, setSelectedTaskForDetails] = useState<StudyTask | null>(null);
   const [selectedTaskForReschedule, setSelectedTaskForReschedule] = useState<StudyTask | null>(null);
 
   useEffect(() => {
-    if (selectedDate !== currentDate) {
+    if (selectedDate !== currentDate && (selectedDate >= ROADMAP_START && selectedDate <= ROADMAP_END)) {
       loadDate(selectedDate);
     }
   }, [selectedDate, currentDate, loadDate]);

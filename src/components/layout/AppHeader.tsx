@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { StudyDay } from '../../types';
-import { ROADMAP_START } from '../../engines';
+import { ROADMAP_START, isTodayDate } from '../../engines';
 
 interface AppHeaderProps {
   currentDay: StudyDay | null;
@@ -50,6 +50,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const isBeforeStart = currentDateStr < ROADMAP_START;
   const isHoliday = Boolean(currentDay?.isHoliday || currentDay?.isProtectedRestDay);
 
+  const isCurrentDateToday = isTodayDate(currentDateStr);
+
   const getDayTypeBadgeText = () => {
     if (isBeforeStart) {
       return (
@@ -73,7 +75,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   };
 
   const getTitleText = () => {
-    if (isBeforeStart) return 'Kickoff';
+    if (isBeforeStart) return 'Pre-Kickoff';
     if (isHoliday) return 'Holiday';
     return `Day ${currentDay?.dayNumber || 1}`;
   };
@@ -146,7 +148,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             <button
               type="button"
               onClick={onToday}
-              className="px-2 py-0.5 text-[11px] font-bold text-slate-700 hover:text-blue-600 rounded-md transition-colors"
+              className={`px-2.5 py-0.5 text-[11px] font-bold rounded-md transition-all ${
+                isCurrentDateToday
+                  ? 'bg-white text-blue-600 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+              }`}
             >
               Today
             </button>

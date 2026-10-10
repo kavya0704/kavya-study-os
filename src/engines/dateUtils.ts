@@ -15,20 +15,10 @@ export function getLocalCalendarDate(): string {
 }
 
 /**
- * Returns today's date bounded within the 90-day roadmap (2026-10-21 to 2027-01-20).
- * If today is before the roadmap start, returns ROADMAP_START.
- * If today is after the roadmap end, returns ROADMAP_END.
- * Otherwise returns today's actual date string.
+ * Returns today's actual calendar date string formatted as YYYY-MM-DD.
  */
 export function getTodayDateString(): string {
-  const localToday = getLocalCalendarDate();
-  if (localToday < ROADMAP_START) {
-    return ROADMAP_START;
-  }
-  if (localToday > ROADMAP_END) {
-    return ROADMAP_END;
-  }
-  return localToday;
+  return getLocalCalendarDate();
 }
 
 /**

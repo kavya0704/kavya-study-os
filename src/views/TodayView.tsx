@@ -132,7 +132,8 @@ export const TodayView: React.FC<TodayViewProps> = ({
     const cur = new Date(`${activeDate}T00:00:00Z`);
     cur.setUTCDate(cur.getUTCDate() + offsetDays);
     const newStr = cur.toISOString().split('T')[0];
-    if (newStr >= ROADMAP_START_DATE && newStr <= ROADMAP_END_DATE) {
+    const minDate = todayRealDate < ROADMAP_START_DATE ? todayRealDate : ROADMAP_START_DATE;
+    if (newStr >= minDate && newStr <= ROADMAP_END_DATE) {
       loadDate(newStr);
       refreshProgress(newStr);
     }
@@ -266,10 +267,10 @@ export const TodayView: React.FC<TodayViewProps> = ({
               </p>
             </div>
 
-            {/* Tomorrow Preview Card */}
+            {/* Kickoff Day 1 Preview Card */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left space-y-1.5">
               <div className="flex items-center justify-between text-[11px] font-bold text-blue-600 uppercase">
-                <span>Tomorrow • Day 1</span>
+                <span>Kickoff • Day 1 (Oct 21)</span>
                 <span>5.5 Hours Target</span>
               </div>
               <h3 className="text-sm font-bold text-slate-900">

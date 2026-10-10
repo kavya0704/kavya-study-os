@@ -347,7 +347,14 @@ export default function App() {
       {/* Bottom Navigation */}
       <BottomNav
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={(tab) => {
+          if (tab === 'today') {
+            const today = getTodayDateString();
+            loadDate(today);
+            refreshProgress(today);
+          }
+          setActiveTab(tab);
+        }}
         pendingReviewsCount={dueReviewsCount}
         backlogRemainingCount={90 - metrics.completedStudyDaysCount}
       />
