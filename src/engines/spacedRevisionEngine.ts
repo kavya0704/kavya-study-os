@@ -4,8 +4,7 @@ export const DEFAULT_PUJA_DATES = [
   '2026-10-17',
   '2026-10-18',
   '2026-10-19',
-  '2026-10-20',
-  '2026-10-21'
+  '2026-10-20'
 ];
 
 export function addDays(dateStr: string, days: number): string {

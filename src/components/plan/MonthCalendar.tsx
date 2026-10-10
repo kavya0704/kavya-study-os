@@ -80,7 +80,7 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
           isCurrentMonth: false,
           isInRoadmap: dStr >= ROADMAP_START && dStr <= ROADMAP_END,
           isToday: isTodayDate(dStr),
-          isRestDay: dStr >= '2026-10-17' && dStr <= '2026-10-21',
+          isRestDay: false,
           totalTasks: 0,
           completedTasks: 0
         });

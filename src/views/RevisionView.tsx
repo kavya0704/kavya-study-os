@@ -31,7 +31,7 @@ export const RevisionView: React.FC = () => {
     : 100;
 
   return (
-    <div className="max-w-md mx-auto px-4 py-4 pb-28 space-y-3.5 animate-in fade-in">
+    <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -77,11 +77,11 @@ export const RevisionView: React.FC = () => {
         </div>
       </div>
 
-      {/* Durga Puja Protection Notice */}
+      {/* Festival Protection Notice */}
       <div className="flex items-start space-x-2.5 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
         <ShieldCheck size={16} className="text-amber-600 shrink-0 mt-0.5" />
         <p className="text-[11px] leading-relaxed text-slate-800">
-          <strong className="text-amber-950 font-bold">Durga Puja Invariant:</strong> Any reviews mathematically falling on 17–21 Oct 2026 are shifted forward to 22 Oct to protect family rest. Max 2 reviews/day cap applied.
+          <strong className="text-amber-950 font-bold">Festival Invariant:</strong> Any reviews mathematically falling on designated festival rest days are shifted forward to protect recovery. Max 2 reviews/day cap applied.
         </p>
       </div>
 

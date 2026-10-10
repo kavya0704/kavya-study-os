@@ -28,10 +28,10 @@ export interface RoadmapDay {
   holidayName?: string;
 }
 
-export const ROADMAP_START_DATE = '2026-10-08';
-export const ROADMAP_END_DATE = '2027-01-17';
+export const ROADMAP_START_DATE = '2026-10-21';
+export const ROADMAP_END_DATE = '2027-01-20';
 export const TOTAL_STUDY_DAYS = 90;
-export const TOTAL_HOLIDAYS = 12;
+export const TOTAL_HOLIDAYS = 2;
 
 export const PHASES: Phase[] = [
   {
@@ -177,7 +177,7 @@ export const PHASES: Phase[] = [
 export const DAYS: RoadmapDay[] = [
   {
     "day": 1,
-    "date": "2026-10-08",
+    "date": "2026-10-21",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -194,7 +194,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 2,
-    "date": "2026-10-09",
+    "date": "2026-10-22",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -211,7 +211,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 3,
-    "date": "2026-10-10",
+    "date": "2026-10-23",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -228,7 +228,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 4,
-    "date": "2026-10-11",
+    "date": "2026-10-24",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -245,7 +245,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 5,
-    "date": "2026-10-12",
+    "date": "2026-10-25",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -262,7 +262,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 6,
-    "date": "2026-10-13",
+    "date": "2026-10-26",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -279,7 +279,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 7,
-    "date": "2026-10-14",
+    "date": "2026-10-27",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -296,7 +296,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 8,
-    "date": "2026-10-15",
+    "date": "2026-10-28",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -312,168 +312,8 @@ export const DAYS: RoadmapDay[] = [
     "isHoliday": false
   },
   {
-    "day": null,
-    "date": "2026-10-16",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Maha Shashthi"
-  },
-  {
-    "day": null,
-    "date": "2026-10-17",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Maha Saptami"
-  },
-  {
-    "day": null,
-    "date": "2026-10-18",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Maha Ashtami"
-  },
-  {
-    "day": null,
-    "date": "2026-10-19",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Maha Navami (Sandhi Puja)"
-  },
-  {
-    "day": null,
-    "date": "2026-10-20",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Vijaya Dashami (Dussehra)"
-  },
-  {
-    "day": null,
-    "date": "2026-10-21",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Dashami Immersion"
-  },
-  {
-    "day": null,
-    "date": "2026-10-22",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Festive Rest Day"
-  },
-  {
-    "day": null,
-    "date": "2026-10-23",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Festive Rest Day"
-  },
-  {
-    "day": null,
-    "date": "2026-10-24",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Festive Rest Day"
-  },
-  {
-    "day": null,
-    "date": "2026-10-25",
-    "phaseId": 1,
-    "phaseName": "Software Engineering Foundation",
-    "topics": [],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "Rest & Recharge",
-    "practiceTask": "Festival break: Zero required study tasks. Streak is fully protected.",
-    "doneWhen": "Rest and enjoy time with family.",
-    "hours": 0,
-    "isHoliday": true,
-    "holidayName": "Durga Puja — Festive Rest Day"
-  },
-  {
     "day": 9,
-    "date": "2026-10-26",
+    "date": "2026-10-29",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -490,7 +330,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 10,
-    "date": "2026-10-27",
+    "date": "2026-10-30",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -507,7 +347,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 11,
-    "date": "2026-10-28",
+    "date": "2026-10-31",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -524,7 +364,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 12,
-    "date": "2026-10-29",
+    "date": "2026-11-01",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -541,7 +381,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 13,
-    "date": "2026-10-30",
+    "date": "2026-11-02",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -558,7 +398,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 14,
-    "date": "2026-10-31",
+    "date": "2026-11-03",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -575,7 +415,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 15,
-    "date": "2026-11-01",
+    "date": "2026-11-04",
     "phaseId": 1,
     "phaseName": "Software Engineering Foundation",
     "topics": [
@@ -592,7 +432,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 16,
-    "date": "2026-11-02",
+    "date": "2026-11-05",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -609,7 +449,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 17,
-    "date": "2026-11-03",
+    "date": "2026-11-06",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -626,7 +466,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 18,
-    "date": "2026-11-04",
+    "date": "2026-11-07",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -638,57 +478,6 @@ export const DAYS: RoadmapDay[] = [
     "timeSplit": "2h Supervised Learning / 2.5h Gradient Descent / 1h Math Proofs",
     "practiceTask": "Derive and code MSE and Binary Cross-Entropy loss functions; write batch and stochastic gradient descent from scratch.",
     "doneWhen": "From-scratch linear and logistic regression models converging to optimal weights.",
-    "hours": 5.5,
-    "isHoliday": false
-  },
-  {
-    "day": 19,
-    "date": "2026-11-05",
-    "phaseId": 2,
-    "phaseName": "ML + Deep Learning Concepts",
-    "topics": [
-      "Classical ML Models & Scikit-Learn Pipelines"
-    ],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "1.5h Algorithms / 3h Scikit-Learn / 1h Leak-Free Design",
-    "practiceTask": "Build Scikit-Learn ColumnTransformer pipelines with standard scaling, one-hot encoding, and train Random Forest / XGBoost classifiers.",
-    "doneWhen": "Leakage-safe end-to-end preprocessing pipeline trained and serialized.",
-    "hours": 5.5,
-    "isHoliday": false
-  },
-  {
-    "day": 20,
-    "date": "2026-11-06",
-    "phaseId": 2,
-    "phaseName": "ML + Deep Learning Concepts",
-    "topics": [
-      "Model Evaluation & Validation Strategy"
-    ],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "2h Metrics Theory / 2.5h Implementation / 1h Error Analysis",
-    "practiceTask": "Calculate Confusion Matrix, Precision, Recall, F1-Score, ROC-AUC, and implement stratified K-Fold cross-validation.",
-    "doneWhen": "Model evaluation report detailing metric tradeoffs across imbalanced data.",
-    "hours": 5.5,
-    "isHoliday": false
-  },
-  {
-    "day": 21,
-    "date": "2026-11-07",
-    "phaseId": 2,
-    "phaseName": "ML + Deep Learning Concepts",
-    "topics": [
-      "Neural Networks: Perceptrons, Activations & Backpropagation"
-    ],
-    "isBuildDay": false,
-    "englishLink": null,
-    "hindiLink": null,
-    "timeSplit": "2h NN Foundations / 2.5h Manual Backprop / 1h Visuals",
-    "practiceTask": "Implement a 2-layer Multi-Layer Perceptron (MLP) with ReLU and Sigmoid activations, deriving manual backward pass gradients.",
-    "doneWhen": "Toy neural network learning XOR problem purely with manual backpropagation.",
     "hours": 5.5,
     "isHoliday": false
   },
@@ -725,8 +514,59 @@ export const DAYS: RoadmapDay[] = [
     "holidayName": "Diwali — Govardhan Puja & Nutan Varsh"
   },
   {
-    "day": 22,
+    "day": 19,
     "date": "2026-11-10",
+    "phaseId": 2,
+    "phaseName": "ML + Deep Learning Concepts",
+    "topics": [
+      "Classical ML Models & Scikit-Learn Pipelines"
+    ],
+    "isBuildDay": false,
+    "englishLink": null,
+    "hindiLink": null,
+    "timeSplit": "1.5h Algorithms / 3h Scikit-Learn / 1h Leak-Free Design",
+    "practiceTask": "Build Scikit-Learn ColumnTransformer pipelines with standard scaling, one-hot encoding, and train Random Forest / XGBoost classifiers.",
+    "doneWhen": "Leakage-safe end-to-end preprocessing pipeline trained and serialized.",
+    "hours": 5.5,
+    "isHoliday": false
+  },
+  {
+    "day": 20,
+    "date": "2026-11-11",
+    "phaseId": 2,
+    "phaseName": "ML + Deep Learning Concepts",
+    "topics": [
+      "Model Evaluation & Validation Strategy"
+    ],
+    "isBuildDay": false,
+    "englishLink": null,
+    "hindiLink": null,
+    "timeSplit": "2h Metrics Theory / 2.5h Implementation / 1h Error Analysis",
+    "practiceTask": "Calculate Confusion Matrix, Precision, Recall, F1-Score, ROC-AUC, and implement stratified K-Fold cross-validation.",
+    "doneWhen": "Model evaluation report detailing metric tradeoffs across imbalanced data.",
+    "hours": 5.5,
+    "isHoliday": false
+  },
+  {
+    "day": 21,
+    "date": "2026-11-12",
+    "phaseId": 2,
+    "phaseName": "ML + Deep Learning Concepts",
+    "topics": [
+      "Neural Networks: Perceptrons, Activations & Backpropagation"
+    ],
+    "isBuildDay": false,
+    "englishLink": null,
+    "hindiLink": null,
+    "timeSplit": "2h NN Foundations / 2.5h Manual Backprop / 1h Visuals",
+    "practiceTask": "Implement a 2-layer Multi-Layer Perceptron (MLP) with ReLU and Sigmoid activations, deriving manual backward pass gradients.",
+    "doneWhen": "Toy neural network learning XOR problem purely with manual backpropagation.",
+    "hours": 5.5,
+    "isHoliday": false
+  },
+  {
+    "day": 22,
+    "date": "2026-11-13",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -743,7 +583,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 23,
-    "date": "2026-11-11",
+    "date": "2026-11-14",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -760,7 +600,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 24,
-    "date": "2026-11-12",
+    "date": "2026-11-15",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -777,7 +617,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 25,
-    "date": "2026-11-13",
+    "date": "2026-11-16",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -794,7 +634,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 26,
-    "date": "2026-11-14",
+    "date": "2026-11-17",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -811,7 +651,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 27,
-    "date": "2026-11-15",
+    "date": "2026-11-18",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -828,7 +668,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 28,
-    "date": "2026-11-16",
+    "date": "2026-11-19",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -845,7 +685,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 29,
-    "date": "2026-11-17",
+    "date": "2026-11-20",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -862,7 +702,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 30,
-    "date": "2026-11-18",
+    "date": "2026-11-21",
     "phaseId": 2,
     "phaseName": "ML + Deep Learning Concepts",
     "topics": [
@@ -879,7 +719,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 31,
-    "date": "2026-11-19",
+    "date": "2026-11-22",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -896,7 +736,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 32,
-    "date": "2026-11-20",
+    "date": "2026-11-23",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -913,7 +753,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 33,
-    "date": "2026-11-21",
+    "date": "2026-11-24",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -930,7 +770,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 34,
-    "date": "2026-11-22",
+    "date": "2026-11-25",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -947,7 +787,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 35,
-    "date": "2026-11-23",
+    "date": "2026-11-26",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -964,7 +804,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 36,
-    "date": "2026-11-24",
+    "date": "2026-11-27",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -981,7 +821,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 37,
-    "date": "2026-11-25",
+    "date": "2026-11-28",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -998,7 +838,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 38,
-    "date": "2026-11-26",
+    "date": "2026-11-29",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1015,7 +855,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 39,
-    "date": "2026-11-27",
+    "date": "2026-11-30",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1032,7 +872,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 40,
-    "date": "2026-11-28",
+    "date": "2026-12-01",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1049,7 +889,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 41,
-    "date": "2026-11-29",
+    "date": "2026-12-02",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1066,7 +906,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 42,
-    "date": "2026-11-30",
+    "date": "2026-12-03",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1083,7 +923,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 43,
-    "date": "2026-12-01",
+    "date": "2026-12-04",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1100,7 +940,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 44,
-    "date": "2026-12-02",
+    "date": "2026-12-05",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1117,7 +957,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 45,
-    "date": "2026-12-03",
+    "date": "2026-12-06",
     "phaseId": 3,
     "phaseName": "LLM Engineering",
     "topics": [
@@ -1134,7 +974,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 46,
-    "date": "2026-12-04",
+    "date": "2026-12-07",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1151,7 +991,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 47,
-    "date": "2026-12-05",
+    "date": "2026-12-08",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1168,7 +1008,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 48,
-    "date": "2026-12-06",
+    "date": "2026-12-09",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1185,7 +1025,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 49,
-    "date": "2026-12-07",
+    "date": "2026-12-10",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1202,7 +1042,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 50,
-    "date": "2026-12-08",
+    "date": "2026-12-11",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1219,7 +1059,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 51,
-    "date": "2026-12-09",
+    "date": "2026-12-12",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1236,7 +1076,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 52,
-    "date": "2026-12-10",
+    "date": "2026-12-13",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1253,7 +1093,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 53,
-    "date": "2026-12-11",
+    "date": "2026-12-14",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1270,7 +1110,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 54,
-    "date": "2026-12-12",
+    "date": "2026-12-15",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1287,7 +1127,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 55,
-    "date": "2026-12-13",
+    "date": "2026-12-16",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1304,7 +1144,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 56,
-    "date": "2026-12-14",
+    "date": "2026-12-17",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1321,7 +1161,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 57,
-    "date": "2026-12-15",
+    "date": "2026-12-18",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1338,7 +1178,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 58,
-    "date": "2026-12-16",
+    "date": "2026-12-19",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1355,7 +1195,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 59,
-    "date": "2026-12-17",
+    "date": "2026-12-20",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1372,7 +1212,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 60,
-    "date": "2026-12-18",
+    "date": "2026-12-21",
     "phaseId": 4,
     "phaseName": "Agentic AI",
     "topics": [
@@ -1389,7 +1229,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 61,
-    "date": "2026-12-19",
+    "date": "2026-12-22",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1406,7 +1246,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 62,
-    "date": "2026-12-20",
+    "date": "2026-12-23",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1423,7 +1263,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 63,
-    "date": "2026-12-21",
+    "date": "2026-12-24",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1440,7 +1280,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 64,
-    "date": "2026-12-22",
+    "date": "2026-12-25",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1457,7 +1297,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 65,
-    "date": "2026-12-23",
+    "date": "2026-12-26",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1474,7 +1314,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 66,
-    "date": "2026-12-24",
+    "date": "2026-12-27",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1491,7 +1331,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 67,
-    "date": "2026-12-25",
+    "date": "2026-12-28",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1508,7 +1348,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 68,
-    "date": "2026-12-26",
+    "date": "2026-12-29",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1525,7 +1365,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 69,
-    "date": "2026-12-27",
+    "date": "2026-12-30",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1542,7 +1382,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 70,
-    "date": "2026-12-28",
+    "date": "2026-12-31",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1559,7 +1399,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 71,
-    "date": "2026-12-29",
+    "date": "2027-01-01",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1576,7 +1416,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 72,
-    "date": "2026-12-30",
+    "date": "2027-01-02",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1593,7 +1433,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 73,
-    "date": "2026-12-31",
+    "date": "2027-01-03",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1610,7 +1450,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 74,
-    "date": "2027-01-01",
+    "date": "2027-01-04",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1627,7 +1467,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 75,
-    "date": "2027-01-02",
+    "date": "2027-01-05",
     "phaseId": 5,
     "phaseName": "Evaluation + Production AI",
     "topics": [
@@ -1644,7 +1484,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 76,
-    "date": "2027-01-03",
+    "date": "2027-01-06",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1661,7 +1501,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 77,
-    "date": "2027-01-04",
+    "date": "2027-01-07",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1678,7 +1518,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 78,
-    "date": "2027-01-05",
+    "date": "2027-01-08",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1695,7 +1535,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 79,
-    "date": "2027-01-06",
+    "date": "2027-01-09",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1712,7 +1552,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 80,
-    "date": "2027-01-07",
+    "date": "2027-01-10",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1729,7 +1569,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 81,
-    "date": "2027-01-08",
+    "date": "2027-01-11",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1746,7 +1586,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 82,
-    "date": "2027-01-09",
+    "date": "2027-01-12",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1763,7 +1603,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 83,
-    "date": "2027-01-10",
+    "date": "2027-01-13",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1780,7 +1620,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 84,
-    "date": "2027-01-11",
+    "date": "2027-01-14",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1797,7 +1637,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 85,
-    "date": "2027-01-12",
+    "date": "2027-01-15",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1814,7 +1654,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 86,
-    "date": "2027-01-13",
+    "date": "2027-01-16",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1831,7 +1671,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 87,
-    "date": "2027-01-14",
+    "date": "2027-01-17",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1848,7 +1688,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 88,
-    "date": "2027-01-15",
+    "date": "2027-01-18",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1865,7 +1705,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 89,
-    "date": "2027-01-16",
+    "date": "2027-01-19",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [
@@ -1882,7 +1722,7 @@ export const DAYS: RoadmapDay[] = [
   },
   {
     "day": 90,
-    "date": "2027-01-17",
+    "date": "2027-01-20",
     "phaseId": 6,
     "phaseName": "Deployment + Systems",
     "topics": [

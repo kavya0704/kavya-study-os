@@ -156,7 +156,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans select-none">
       {/* Active Tab Screen */}
-      <div className="flex-1 max-w-md mx-auto w-full">
+      <div className="flex-1 w-full">
         {activeTab === 'today' && (
           <TodayView
             onOpenTimerModal={handleOpenTimerModal}
@@ -204,7 +204,7 @@ export default function App() {
 
         {/* AI Coach Tab */}
         {activeTab === 'coach' && (
-          <div className="max-w-md mx-auto px-4 py-6 pb-28 space-y-4 animate-in fade-in">
+          <div className="max-w-2xl mx-auto px-4 py-6 pb-28 space-y-4 animate-in fade-in">
             <div className="flex items-center space-x-2.5">
               <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
                 <Bot size={22} />
@@ -243,7 +243,7 @@ export default function App() {
 
       {/* Floating Active Timer Mini-Bar */}
       {isRunning && (
-        <div className="fixed bottom-20 left-4 right-4 z-40 max-w-md mx-auto">
+        <div className="fixed bottom-20 md:bottom-24 left-4 right-4 z-40 max-w-md md:max-w-lg mx-auto">
           <div className="bg-white/95 border border-blue-200 shadow-2xl rounded-2xl p-3 flex items-center justify-between backdrop-blur-md">
             <div
               className="flex items-center space-x-3 min-w-0 cursor-pointer flex-1"
@@ -296,7 +296,7 @@ export default function App() {
       {/* Fullscreen Timer View Modal */}
       {isTimerModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-50 flex flex-col overflow-y-auto animate-in fade-in">
-          <div className="sticky top-0 z-10 px-4 py-3 bg-white/90 backdrop-blur-md border-b border-slate-200 flex items-center justify-between max-w-md mx-auto w-full">
+          <div className="sticky top-0 z-10 px-4 sm:px-6 py-3 bg-white/90 backdrop-blur-md border-b border-slate-200 flex items-center justify-between max-w-2xl mx-auto w-full">
             <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
               Study Focus Mode
             </span>
@@ -310,7 +310,7 @@ export default function App() {
             </button>
           </div>
 
-          <div className="flex-1 max-w-md mx-auto w-full">
+          <div className="flex-1 max-w-2xl mx-auto w-full px-4 sm:px-6">
             <TimerView />
           </div>
         </div>
@@ -319,7 +319,7 @@ export default function App() {
       {/* Full Screen Settings View Modal */}
       {isSettingsOpen && (
         <div className="fixed inset-0 z-50 bg-slate-50 text-slate-900 flex flex-col overflow-y-auto animate-in slide-in-from-bottom-2">
-          <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+          <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-6 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <button
                 type="button"
@@ -338,7 +338,7 @@ export default function App() {
               Done
             </button>
           </div>
-          <div className="max-w-md mx-auto w-full px-4 pt-2 flex-1">
+          <div className="max-w-3xl mx-auto w-full px-4 sm:px-6 pt-4 flex-1">
             <SettingsView />
           </div>
         </div>

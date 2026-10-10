@@ -119,14 +119,14 @@ export const WeekView: React.FC<WeekViewProps> = ({
     const prev = new Date(monday);
     prev.setDate(prev.getDate() - 7);
     const s = prev.toISOString().split('T')[0];
-    if (s >= '2026-10-05') onSelectDate(s);
+    if (s >= '2026-10-19') onSelectDate(s);
   };
 
   const handleNextWeek = () => {
     const next = new Date(monday);
     next.setDate(next.getDate() + 7);
     const s = next.toISOString().split('T')[0];
-    if (s <= '2027-01-18') onSelectDate(s);
+    if (s <= '2027-01-26') onSelectDate(s);
   };
 
   return (

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import { StudyDay } from '../../types';
+import { ROADMAP_START } from '../../engines';
 
 interface AppHeaderProps {
   currentDay: StudyDay | null;
@@ -46,14 +47,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     day: 'numeric'
   });
 
-  const isBeforeStart = currentDateStr < '2026-10-08';
+  const isBeforeStart = currentDateStr < ROADMAP_START;
   const isHoliday = Boolean(currentDay?.isHoliday || currentDay?.isProtectedRestDay);
 
   const getDayTypeBadgeText = () => {
     if (isBeforeStart) {
       return (
         <span className="inline-flex items-center text-cyan-600 font-bold">
-          <Sparkles size={11} className="mr-1 text-cyan-500" /> Starts 8 Oct 2026
+          <Sparkles size={11} className="mr-1 text-cyan-500" /> Starts 21 Oct 2026
         </span>
       );
     }
@@ -78,8 +79,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   };
 
   return (
-    <header className="bg-white/80 backdrop-blur-md pt-5 pb-3 px-5 transition-colors">
-      <div className="max-w-md mx-auto">
+    <header className="bg-white/80 backdrop-blur-md pt-5 pb-3 px-4 sm:px-6 lg:px-8 transition-colors">
+      <div className="max-w-6xl mx-auto">
         {/* Top Micro Bar: StudyOS + Offline Badge | Bell, Settings */}
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center space-x-2.5">

@@ -124,8 +124,8 @@ export const BackupRestoreCard: React.FC = () => {
       
       // Reload stores
       await reloadProfile();
-      await loadDate('2026-10-08');
-      await refreshProgress('2026-10-08');
+      await loadDate('2026-10-21');
+      await refreshProgress('2026-10-21');
       setTimeout(() => setRestoreFeedback(null), 4500);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Reset failed';

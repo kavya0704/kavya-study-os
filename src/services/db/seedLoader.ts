@@ -6,7 +6,7 @@ export const defaultProfile: UserProfile = {
   id: 'profile_kavya',
   displayName: 'Kavya Shaw',
   timezone: 'Asia/Kolkata',
-  planStartDate: '2026-10-08',
+  planStartDate: '2026-10-21',
   collegeWeekdays: [1, 3, 5], // Mon, Wed, Fri
   teachingBlock: {
     enabled: true,
@@ -18,24 +18,13 @@ export const defaultProfile: UserProfile = {
     startTime: '06:30',
     endTime: '07:45'
   },
-  pujaRestDates: [
-    '2026-10-16',
-    '2026-10-17',
-    '2026-10-18',
-    '2026-10-19',
-    '2026-10-20',
-    '2026-10-21',
-    '2026-10-22',
-    '2026-10-23',
-    '2026-10-24',
-    '2026-10-25'
-  ],
+  pujaRestDates: [],
   theme: 'dark',
   reducedMotion: false,
   defaultFocusIntervalMinutes: 25,
   groqApiKey: (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_GROQ_API_KEY || '',
-  createdAt: '2026-10-08T00:00:00Z',
-  updatedAt: '2026-10-08T00:00:00Z'
+  createdAt: '2026-10-21T00:00:00Z',
+  updatedAt: '2026-10-21T00:00:00Z'
 };
 
 export interface DatabaseStats {
@@ -49,14 +38,23 @@ export interface DatabaseStats {
 export async function checkAndSeedDatabase(): Promise<DatabaseStats> {
   const db = await getDb();
   
-  // Check if profile exists in the new v2 database
+  // Check if profile exists and matches new 21 Oct 2026 start date
   const existingProfile = await db.get('user_profile', 'profile_kavya');
+  const needsReseed = !existingProfile || existingProfile.planStartDate !== '2026-10-21';
   
-  if (!existingProfile) {
-    console.log('Seeding new 90-Day AI Engineer StudyOS database...');
+  if (needsReseed) {
+    console.log('Seeding new 90-Day AI Engineer StudyOS database (starts 21 Oct 2026)...');
     
-    // 1. Profile
-    await db.put('user_profile', defaultProfile);
+    // Clear old days and tasks when migrating start date
+    await db.clear('study_days');
+    await db.clear('study_tasks');
+
+    // 1. Profile (preserving user API key if previously configured)
+    const profileToSave: UserProfile = {
+      ...defaultProfile,
+      groqApiKey: existingProfile?.groqApiKey || defaultProfile.groqApiKey
+    };
+    await db.put('user_profile', profileToSave);
 
     // 2. Days from single source of truth
     const dayTx = db.transaction('study_days', 'readwrite');
@@ -89,8 +87,8 @@ export async function checkAndSeedDatabase(): Promise<DatabaseStats> {
           practiceTaskDone: false,
           doneWhenSatisfied: false
         },
-        createdAt: '2026-10-08T00:00:00Z',
-        updatedAt: '2026-10-08T00:00:00Z'
+        createdAt: '2026-10-21T00:00:00Z',
+        updatedAt: '2026-10-21T00:00:00Z'
       };
       await dayTx.store.put(studyDay);
     }
@@ -116,8 +114,8 @@ export async function checkAndSeedDatabase(): Promise<DatabaseStats> {
           resourceIds: [],
           originalDate: d.date,
           currentDate: d.date,
-          createdAt: '2026-10-08T00:00:00Z',
-          updatedAt: '2026-10-08T00:00:00Z'
+          createdAt: '2026-10-21T00:00:00Z',
+          updatedAt: '2026-10-21T00:00:00Z'
         };
         await taskTx.store.put(studyTask);
       }

@@ -25,7 +25,7 @@ export const ProgressView: React.FC = () => {
   }, [activeDate, refreshProgress]);
 
   return (
-    <div className="max-w-md mx-auto px-4 py-4 pb-28 space-y-3.5 animate-in fade-in">
+    <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-5 animate-in fade-in">
       {/* Title & Quick Stats */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -47,7 +47,7 @@ export const ProgressView: React.FC = () => {
         </div>
 
         {/* 4 High-Impact KPI Cards */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
           {/* Card 1: Overall Completion */}
           <div className="p-3.5 bg-white border border-slate-100 rounded-2xl space-y-1 shadow-xs">
             <div className="flex items-center space-x-1 text-blue-600 font-semibold text-[10px] uppercase">
@@ -97,10 +97,10 @@ export const ProgressView: React.FC = () => {
               <span>Projected Finish</span>
             </div>
             <div className="text-base font-bold text-slate-900 font-mono">
-              17 Jan 2027
+              20 Jan 2027
             </div>
             <span className="text-[11px] text-slate-500 block leading-tight font-medium">
-              12 holiday days accounted
+              2 festival rest days accounted
             </span>
           </div>
         </div>

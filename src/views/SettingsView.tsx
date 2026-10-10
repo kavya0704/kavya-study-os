@@ -25,7 +25,7 @@ export const SettingsView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-4 pb-28 space-y-3.5 animate-in fade-in">
+    <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
       {/* Profile & OS Header Banner */}
       <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm relative overflow-hidden">
         <div className="flex items-start justify-between relative z-10">
@@ -61,7 +61,7 @@ export const SettingsView: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100 text-center">
           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
             <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Target End</div>
-            <div className="text-xs font-bold text-slate-900 mt-0.5">17 Jan 2027</div>
+            <div className="text-xs font-bold text-slate-900 mt-0.5">20 Jan 2027</div>
           </div>
           <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
             <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Curriculum</div>

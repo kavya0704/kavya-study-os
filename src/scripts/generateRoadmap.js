@@ -4,20 +4,9 @@
 import fs from 'fs';
 import path from 'path';
 
-const START_DATE = '2026-10-08';
+const START_DATE = '2026-10-21';
 
 const HOLIDAYS = [
-  // Durga Puja: 10 days off
-  { date: '2026-10-16', name: 'Durga Puja — Maha Shashthi' },
-  { date: '2026-10-17', name: 'Durga Puja — Maha Saptami' },
-  { date: '2026-10-18', name: 'Durga Puja — Maha Ashtami' },
-  { date: '2026-10-19', name: 'Durga Puja — Maha Navami (Sandhi Puja)' },
-  { date: '2026-10-20', name: 'Durga Puja — Vijaya Dashami (Dussehra)' },
-  { date: '2026-10-21', name: 'Durga Puja — Dashami Immersion' },
-  { date: '2026-10-22', name: 'Durga Puja — Festive Rest Day' },
-  { date: '2026-10-23', name: 'Durga Puja — Festive Rest Day' },
-  { date: '2026-10-24', name: 'Durga Puja — Festive Rest Day' },
-  { date: '2026-10-25', name: 'Durga Puja — Festive Rest Day' },
   // Diwali: 2 days off
   { date: '2026-11-08', name: 'Diwali — Lakshmi Puja' },
   { date: '2026-11-09', name: 'Diwali — Govardhan Puja & Nutan Varsh' },

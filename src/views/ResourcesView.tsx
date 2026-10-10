@@ -70,7 +70,7 @@ export const ResourcesView: React.FC = () => {
   const languages: Array<'All' | 'Hindi' | 'Hinglish' | 'English'> = ['All', 'Hindi', 'Hinglish', 'English'];
 
   return (
-    <div className="max-w-md mx-auto px-4 py-4 pb-28 space-y-3.5 animate-in fade-in">
+    <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
       {/* Title & Add Action */}
       <div className="flex items-center justify-between">
         <div>
@@ -158,7 +158,7 @@ export const ResourcesView: React.FC = () => {
       </div>
 
       {/* Resources List */}
-      <div className="space-y-2.5 pt-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
         {isLoading ? (
           <div className="text-center py-12 text-slate-400 text-xs animate-pulse">
             Loading curated resources...

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { StudyTask, StudySession, StudyDay } from '../types';
 import { getDb } from '../services/db';
-import { PHASES, TOTAL_STUDY_DAYS } from '../data/roadmap';
+import { PHASES, TOTAL_STUDY_DAYS, ROADMAP_END_DATE } from '../data/roadmap';
 
 export interface PhaseProgress {
   phaseId: number;
@@ -48,7 +48,7 @@ export const useProgressStore = create<ProgressState>((set) => ({
     overallPercentage: 0,
     currentStreak: 0,
     totalHoursStudied: 0,
-    projectedFinishDate: '2027-01-17',
+    projectedFinishDate: ROADMAP_END_DATE,
     phaseProgress: PHASES.map(p => ({
       phaseId: p.id,
       phaseName: p.name,
@@ -127,8 +127,8 @@ export const useProgressStore = create<ProgressState>((set) => ({
       const holidayNameToday = todayDay?.holidayName;
 
       // 8. Projected finish date
-      // If studying at least 1 day per calendar day, finish on Jan 17, 2027
-      const projectedFinish = '2027-01-17';
+      // If studying at least 1 day per calendar day, finish on ROADMAP_END_DATE
+      const projectedFinish = ROADMAP_END_DATE;
 
       set({
         metrics: {

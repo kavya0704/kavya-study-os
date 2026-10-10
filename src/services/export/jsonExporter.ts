@@ -289,8 +289,8 @@ export async function resetDatabaseToDefaults(): Promise<void> {
         practiceTaskDone: false,
         doneWhenSatisfied: false
       },
-      createdAt: '2026-10-08T00:00:00Z',
-      updatedAt: '2026-10-08T00:00:00Z'
+      createdAt: '2026-10-21T00:00:00Z',
+      updatedAt: '2026-10-21T00:00:00Z'
     };
     await dayTx.store.put(studyDay);
   }
@@ -317,8 +317,8 @@ export async function resetDatabaseToDefaults(): Promise<void> {
         resourceIds: [],
         originalDate: d.date,
         currentDate: d.date,
-        createdAt: '2026-10-08T00:00:00Z',
-        updatedAt: '2026-10-08T00:00:00Z'
+        createdAt: '2026-10-21T00:00:00Z',
+        updatedAt: '2026-10-21T00:00:00Z'
       };
       await taskTx.store.put(studyTask);
     }

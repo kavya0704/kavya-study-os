@@ -60,7 +60,7 @@ export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-3 pb-28 space-y-3.5 animate-in fade-in">
+    <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
       {/* Header & Segmented Mode Switcher */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">

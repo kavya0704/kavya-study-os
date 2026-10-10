@@ -50,7 +50,7 @@ export const TimerView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-4 pb-28 space-y-4 animate-in fade-in">
+    <div className="max-w-xl mx-auto w-full px-4 sm:px-6 py-4 pb-28 space-y-5 animate-in fade-in">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div>
