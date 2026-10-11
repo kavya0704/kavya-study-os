@@ -129,6 +129,41 @@ export const SettingsView: React.FC = () => {
       {/* Full Database Backup & Markdown Export */}
       <BackupRestoreCard />
 
+      {/* GSoC 2027 Hub Database & Backup */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600">
+              <Sparkles size={16} />
+            </div>
+            <div>
+              <h3 className="text-xs font-bold text-slate-900">GSoC 2027 Database & Backup</h3>
+              <p className="text-[11px] text-slate-700">Strictly isolated in <code className="text-teal-700">kavya_studyos_gsoc_2027_v1</code></p>
+            </div>
+          </div>
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200 uppercase">
+            Separate DB
+          </span>
+        </div>
+
+        <p className="text-xs text-slate-600 leading-relaxed">
+          GSoC preparation checklists, proposals, and contributions are kept in an isolated IndexedDB store, ensuring your 90-Day AI/ML roadmap data is never overwritten.
+        </p>
+
+        <div className="flex items-center space-x-2 pt-1">
+          <button
+            type="button"
+            onClick={async () => {
+              const { exportGsocBackup } = await import('../services/export/gsocBackup');
+              await exportGsocBackup();
+            }}
+            className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-colors shadow-xs"
+          >
+            Export GSoC Backup (.json)
+          </button>
+        </div>
+      </div>
+
       {/* iPhone 16 PWA Native Shell & System Specs */}
       <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3">
         <div className="flex items-center space-x-2.5">

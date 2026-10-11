@@ -17,13 +17,21 @@ import {
 } from '../components/plan';
 import { TaskDetailSheet } from '../components/task/TaskDetailSheet';
 
+import { GsocView } from './GsocView';
+
 export type PlanMode = 'day' | 'week' | 'month' | 'roadmap';
+export type CurriculumTrack = 'aiml' | 'gsoc';
 
 interface PlanViewProps {
   onStartTimer?: (task: StudyTask) => void;
+  initialTrack?: CurriculumTrack;
 }
 
-export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
+export const PlanView: React.FC<PlanViewProps> = ({ 
+  onStartTimer,
+  initialTrack = 'aiml' 
+}) => {
+  const [activeTrack, setActiveTrack] = useState<CurriculumTrack>(initialTrack);
   const {
     currentDate,
     loadDate,
@@ -62,8 +70,34 @@ export const PlanView: React.FC<PlanViewProps> = ({ onStartTimer }) => {
     }
   };
 
+  if (activeTrack === 'gsoc') {
+    return (
+      <GsocView 
+        onSwitchToAiml={() => setActiveTrack('aiml')} 
+      />
+    );
+  }
+
   return (
     <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in">
+      {/* Track Toggle: AI/ML 90-Day Sprint vs GSoC 2027 Hub */}
+      <div className="flex items-center justify-between p-1 bg-slate-100 rounded-2xl border border-slate-200">
+        <button
+          type="button"
+          onClick={() => setActiveTrack('aiml')}
+          className="flex-1 py-2 px-3 text-xs font-black rounded-xl transition-all text-center bg-white text-blue-600 shadow-sm"
+        >
+          90-Day AI/ML Sprint
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTrack('gsoc')}
+          className="flex-1 py-2 px-3 text-xs font-bold rounded-xl transition-all text-center text-slate-600 hover:text-teal-700 hover:bg-slate-200/60"
+        >
+          GSoC 2027 Hub (32 Wks)
+        </button>
+      </div>
+
       {/* Header & Segmented Mode Switcher */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">

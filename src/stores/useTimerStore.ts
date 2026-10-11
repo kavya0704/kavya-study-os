@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { FocusIntervalMode, StudySession } from '../types';
+import { FocusIntervalMode, StudySession, TrackId } from '../types';
 import { getDb } from '../services/db';
 import { calculateTrueElapsedSeconds } from '../engines/timerReconstructor';
 
@@ -8,6 +8,8 @@ interface TimerState {
   isPaused: boolean;
   mode: FocusIntervalMode;
   activeTaskId?: string;
+  activeTrackId?: TrackId;
+  activeDayId?: string;
   activeTopic: string;
   startTimestamp: number;
   pauseStartTimestamp: number;
@@ -17,8 +19,8 @@ interface TimerState {
 
   setMode: (mode: FocusIntervalMode) => void;
   setActiveTopic: (topic: string) => void;
-  setActiveTask: (taskId?: string, topic?: string) => void;
-  startTimer: (taskId?: string, topic?: string, mode?: FocusIntervalMode) => void;
+  setActiveTask: (taskId?: string, topic?: string, trackId?: TrackId, dayId?: string) => void;
+  startTimer: (taskId?: string, topic?: string, mode?: FocusIntervalMode, trackId?: TrackId, dayId?: string) => void;
   pauseTimer: () => void;
   resumeTimer: () => void;
   finishSession: (note?: string) => Promise<StudySession | null>;
@@ -31,7 +33,9 @@ interface TimerState {
     durationMinutes: number,
     topic: string,
     note?: string,
-    taskId?: string
+    taskId?: string,
+    trackId?: TrackId,
+    dayId?: string
   ) => Promise<StudySession>;
 }
 
@@ -40,6 +44,8 @@ export const useTimerStore = create<TimerState>((set, get) => ({
   isPaused: false,
   mode: 'stopwatch',
   activeTaskId: undefined,
+  activeTrackId: undefined,
+  activeDayId: undefined,
   activeTopic: 'General Revision',
   startTimestamp: 0,
   pauseStartTimestamp: 0,
@@ -49,20 +55,24 @@ export const useTimerStore = create<TimerState>((set, get) => ({
 
   setMode: (mode) => set({ mode }),
   setActiveTopic: (activeTopic) => set({ activeTopic }),
-  setActiveTask: (activeTaskId, activeTopic) => {
+  setActiveTask: (activeTaskId, activeTopic, trackId, dayId) => {
     set({
       activeTaskId,
+      activeTrackId: trackId ?? get().activeTrackId,
+      activeDayId: dayId ?? get().activeDayId,
       activeTopic: activeTopic || get().activeTopic
     });
   },
 
-  startTimer: (taskId, topic, mode) => {
+  startTimer: (taskId, topic, mode, trackId, dayId) => {
     const now = Date.now();
     set({
       isRunning: true,
       isPaused: false,
       mode: mode || get().mode,
       activeTaskId: taskId ?? get().activeTaskId,
+      activeTrackId: trackId ?? get().activeTrackId,
+      activeDayId: dayId ?? get().activeDayId,
       activeTopic: topic ?? get().activeTopic,
       startTimestamp: now,
       pauseStartTimestamp: 0,
@@ -112,7 +122,7 @@ export const useTimerStore = create<TimerState>((set, get) => ({
   },
 
   finishSession: async (note) => {
-    const { isRunning, startTimestamp, pausedDurationMs, activeTaskId, activeTopic, elapsedSeconds } = get();
+    const { isRunning, startTimestamp, pausedDurationMs, activeTaskId, activeTrackId, activeDayId, activeTopic, elapsedSeconds } = get();
     if (!isRunning || elapsedSeconds <= 5) {
       get().discardSession();
       return null;
@@ -121,6 +131,8 @@ export const useTimerStore = create<TimerState>((set, get) => ({
     const session: StudySession = {
       id: `session-${Date.now()}`,
       taskId: activeTaskId,
+      trackId: activeTrackId,
+      dayId: activeDayId,
       date: new Date(startTimestamp).toISOString().split('T')[0],
       startedAt: new Date(startTimestamp).toISOString(),
       endedAt: new Date().toISOString(),
@@ -147,6 +159,23 @@ export const useTimerStore = create<TimerState>((set, get) => ({
       }
     }
 
+    // If track is gsoc2027, also log to GSoC database store
+    if (activeTrackId === 'gsoc2027') {
+      try {
+        const { useGsocStore } = await import('./useGsocStore');
+        await useGsocStore.getState().logStudySession({
+          dayId: activeDayId || 'gsoc-manual',
+          taskTitle: activeTopic,
+          startTime: new Date(startTimestamp).toISOString(),
+          endTime: new Date().toISOString(),
+          durationSeconds: elapsedSeconds,
+          date: new Date(startTimestamp).toISOString().split('T')[0]
+        });
+      } catch (err) {
+        console.error('Failed to log GSoC study session:', err);
+      }
+    }
+
     get().discardSession();
     await get().loadRecentSessions();
     return session;
@@ -157,6 +186,8 @@ export const useTimerStore = create<TimerState>((set, get) => ({
       isRunning: false,
       isPaused: false,
       activeTaskId: undefined,
+      activeTrackId: undefined,
+      activeDayId: undefined,
       activeTopic: 'General Revision',
       startTimestamp: 0,
       pauseStartTimestamp: 0,
@@ -176,12 +207,14 @@ export const useTimerStore = create<TimerState>((set, get) => ({
     }
   },
 
-  logManualSession: async (date, durationMinutes, topic, note, taskId) => {
+  logManualSession: async (date, durationMinutes, topic, note, taskId, trackId, dayId) => {
     const durationSeconds = durationMinutes * 60;
     const now = new Date().toISOString();
     const session: StudySession = {
       id: `session-manual-${Date.now()}`,
       taskId,
+      trackId,
+      dayId,
       date,
       startedAt: now,
       endedAt: now,
@@ -204,6 +237,23 @@ export const useTimerStore = create<TimerState>((set, get) => ({
         task.actualMinutes = (task.actualMinutes || 0) + durationMinutes;
         task.updatedAt = now;
         await db.put('study_tasks', task);
+      }
+    }
+
+    // If track is gsoc2027, also log to GSoC database store
+    if (trackId === 'gsoc2027') {
+      try {
+        const { useGsocStore } = await import('./useGsocStore');
+        await useGsocStore.getState().logStudySession({
+          dayId: dayId || 'gsoc-manual',
+          taskTitle: topic,
+          startTime: now,
+          endTime: now,
+          durationSeconds,
+          date
+        });
+      } catch (err) {
+        console.error('Failed to log GSoC study session:', err);
       }
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, Calendar, PlayCircle, BookOpen, BarChart2 } from 'lucide-react';
 
-export type NavTab = 'today' | 'plan' | 'timer' | 'resources' | 'progress' | 'roadmap' | 'backlog' | 'revision' | 'coach';
+export type NavTab = 'today' | 'plan' | 'timer' | 'resources' | 'progress' | 'roadmap' | 'backlog' | 'revision' | 'coach' | 'gsoc';
 
 interface BottomNavProps {
   activeTab: NavTab;
@@ -24,7 +24,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 
   // Map legacy tabs to active visual tabs
   const getNormalizedActiveTab = (tab: NavTab): string => {
-    if (tab === 'roadmap') return 'plan';
+    if (tab === 'roadmap' || tab === 'gsoc') return 'plan';
     if (tab === 'backlog') return 'progress';
     return tab;
   };

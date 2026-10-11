@@ -1,8 +1,13 @@
+import type { TrackId } from './gsoc';
+export type { TrackId };
+
 export type FocusIntervalMode = 'stopwatch' | 'pomodoro_25_5' | 'deep_50_10' | 'manual';
 
 export interface StudySession {
   id: string;
   taskId?: string;
+  trackId?: TrackId;
+  dayId?: string;
   date: string;
   startedAt: string;
   endedAt?: string;

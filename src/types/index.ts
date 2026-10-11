@@ -4,3 +4,4 @@ export * from './timer';
 export * from './notes';
 export * from './resources';
 export * from './ai';
+export * from './gsoc';

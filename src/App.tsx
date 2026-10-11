@@ -15,6 +15,7 @@ import { ProgressView } from './views/ProgressView';
 import { RevisionView } from './views/RevisionView';
 import { TimerView } from './views/TimerView';
 import { SettingsView } from './views/SettingsView';
+import { GsocView } from './views/GsocView';
 import { BottomNav, NavTab } from './components/layout/BottomNav';
 import { 
   Play, 
@@ -163,7 +164,15 @@ export default function App() {
             onOpenSettings={() => setIsSettingsOpen(true)}
             onOpenNotifications={() => setActiveTab('revision')}
             onOpenInternships={() => setActiveTab('resources')}
+            onOpenGsoc={() => setActiveTab('gsoc')}
           />
+        )}
+
+        {/* GSoC 2027 Preparation Hub Tab */}
+        {activeTab === 'gsoc' && (
+          <div className="pt-2">
+            <GsocView onSwitchToAiml={() => setActiveTab('plan')} />
+          </div>
         )}
 
         {/* Plan / Roadmap Tab */}

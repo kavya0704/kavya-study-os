@@ -41,6 +41,7 @@ interface TodayViewProps {
   onOpenNotifications?: () => void;
   onNavigateToRoadmap?: () => void;
   onOpenInternships?: () => void;
+  onOpenGsoc?: () => void;
 }
 
 export type LinkLanguagePreference = 'both' | 'english' | 'hindi';
@@ -49,7 +50,8 @@ export const TodayView: React.FC<TodayViewProps> = ({
   onOpenTimerModal,
   onOpenSettings,
   onOpenNotifications,
-  onOpenInternships
+  onOpenInternships,
+  onOpenGsoc
 }) => {
   const { 
     currentDate, 
@@ -326,6 +328,37 @@ export const TodayView: React.FC<TodayViewProps> = ({
                 </button>
               )}
             </div>
+
+            {/* GSoC 2027 Hub Shortcut */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-teal-950 via-slate-900 to-indigo-950 text-white text-left space-y-2.5 shadow-sm border border-teal-800/40">
+              <div className="flex items-center justify-between text-[11px] font-bold text-teal-300 uppercase">
+                <span className="flex items-center space-x-1.5">
+                  <Sparkles size={13} className="text-teal-400" />
+                  <span>GSoC 2027 Hub</span>
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-400/30 text-[10px]">
+                  32 Weeks • 223 Days
+                </span>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  Google Summer of Code 2027 Workspace
+                </h4>
+                <p className="text-xs text-slate-300 pt-0.5">
+                  Target: DIPY & PyTorch-Ignite. 8 structured phases, 45 verified resources, and 12-section proposal workspace.
+                </p>
+              </div>
+              {onOpenGsoc && (
+                <button
+                  type="button"
+                  onClick={onOpenGsoc}
+                  className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 active:scale-98"
+                >
+                  <span>Open GSoC 2027 Hub</span>
+                  <ChevronRight size={14} />
+                </button>
+              )}
+            </div>
           </div>
         ) : isAfterEnd ? (
           /* State 2: Course Complete */
@@ -463,6 +496,37 @@ export const TodayView: React.FC<TodayViewProps> = ({
                     className="w-full py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center space-x-1"
                   >
                     <span>Browse 10 Internships</span>
+                    <ChevronRight size={13} />
+                  </button>
+                )}
+              </div>
+
+              {/* GSoC 2027 Hub Shortcut */}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-teal-950 via-slate-900 to-indigo-950 text-white space-y-2 border border-teal-800/40 shadow-xs">
+                <div className="flex items-center justify-between text-[11px] font-bold text-teal-300 uppercase">
+                  <span className="flex items-center space-x-1.5">
+                    <Sparkles size={12} className="text-teal-400" />
+                    <span>GSoC 2027 Hub</span>
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-400/30 text-[10px]">
+                    Active Track
+                  </span>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white">
+                    DIPY & Scientific Python Track
+                  </h4>
+                  <p className="text-[11px] text-slate-300 pt-0.5">
+                    Syllabus, verified masterclasses & PR tracker.
+                  </p>
+                </div>
+                {onOpenGsoc && (
+                  <button
+                    type="button"
+                    onClick={onOpenGsoc}
+                    className="w-full py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center space-x-1"
+                  >
+                    <span>Launch GSoC Hub</span>
                     <ChevronRight size={13} />
                   </button>
                 )}
