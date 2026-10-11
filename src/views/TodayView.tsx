@@ -354,7 +354,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
                   onClick={onOpenGsoc}
                   className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-1.5 active:scale-98"
                 >
-                  <span>Open GSoC 2027 Hub</span>
+                  <span>Open GSoC 2027 Full Roadmap</span>
                   <ChevronRight size={14} />
                 </button>
               )}
@@ -526,7 +526,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
                     onClick={onOpenGsoc}
                     className="w-full py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center space-x-1"
                   >
-                    <span>Launch GSoC Hub</span>
+                    <span>Open GSoC 2027 Full Roadmap</span>
                     <ChevronRight size={13} />
                   </button>
                 )}

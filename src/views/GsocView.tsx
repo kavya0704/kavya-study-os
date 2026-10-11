@@ -51,6 +51,12 @@ export const GsocView: React.FC<GsocViewProps> = ({
     loadAll();
   }, [loadAll]);
 
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
+
   return (
     <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-28 space-y-4 animate-in fade-in text-slate-900">
       {/* 1. Track Switcher & Header Bar */}

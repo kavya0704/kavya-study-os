@@ -73,6 +73,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
   if (activeTrack === 'gsoc') {
     return (
       <GsocView 
+        initialTab="roadmap"
         onSwitchToAiml={() => setActiveTrack('aiml')} 
       />
     );

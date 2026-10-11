@@ -171,7 +171,7 @@ export default function App() {
         {/* GSoC 2027 Preparation Hub Tab */}
         {activeTab === 'gsoc' && (
           <div className="pt-2">
-            <GsocView onSwitchToAiml={() => setActiveTab('plan')} />
+            <GsocView initialTab="roadmap" onSwitchToAiml={() => setActiveTab('plan')} />
           </div>
         )}
 
