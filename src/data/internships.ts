@@ -26,9 +26,9 @@ export interface WeeklyInternshipBatch {
 }
 
 export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
-  weekNumber: 42,
-  weekLabel: 'Week of Oct 12 – Oct 19, 2026',
-  lastUpdated: '2026-10-12',
+  weekNumber: 43,
+  weekLabel: 'Week of Oct 19 – Oct 26, 2026',
+  lastUpdated: '2026-10-19',
   targetApplicationsGoal: 40,
   internships: [
     {
@@ -46,7 +46,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 09, 2026',
       deadline: 'Rolling / Early Applicant Advantage',
       description: 'Work alongside Microsoft Research teams developing large-scale generative models and applied intelligence pipelines.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: true
     },
     {
@@ -64,7 +64,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 08, 2026',
       deadline: 'Rolling Evaluation',
       description: 'Design and implement scalable machine learning models and backend pipelines serving billions of users.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: true
     },
     {
@@ -82,7 +82,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 09, 2026',
       deadline: '30 Oct 2026',
       description: 'Accelerate neural network inference and optimize model architectures using GPU acceleration libraries.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: true
     },
     {
@@ -100,7 +100,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 07, 2026',
       deadline: 'Rolling Application',
       description: 'Build predictive customer intelligence models and automated NLP pipelines for Amazon retail and AWS services.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -118,7 +118,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 08, 2026',
       deadline: '28 Oct 2026',
       description: 'Build real-time fraud detection and LLM-powered assistant workflows on payment infrastructure.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -136,7 +136,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 09, 2026',
       deadline: '31 Oct 2026',
       description: 'Develop recommendation and demand-forecasting algorithms using high-throughput feature stores.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -154,7 +154,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 07, 2026',
       deadline: 'Rolling Selection',
       description: 'Design Retrieval-Augmented Generation (RAG) pipelines and fine-tune open-weights models for enterprise clients.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -172,7 +172,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 08, 2026',
       deadline: 'Rolling Evaluation',
       description: 'Contribute to tokenization benchmarks, datasets curation, and evaluation suites for Indian language models.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -190,7 +190,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 09, 2026',
       deadline: '25 Oct 2026',
       description: 'Participate in the nationwide ML sprint track with fast-track direct interviews and internship offers.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: false
     },
     {
@@ -208,7 +208,7 @@ export const CURRENT_WEEKLY_INTERNSHIPS: WeeklyInternshipBatch = {
       postedDate: 'Oct 06, 2026',
       deadline: 'Rolling',
       description: 'Build public AI demos, create Gradio applications, and contribute to state-of-the-art open-source repositories.',
-      weekNumber: 42,
+      weekNumber: 43,
       featured: true
     }
   ]
